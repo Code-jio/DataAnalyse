@@ -34,16 +34,15 @@ export function takeHDPhoto(sensorId, userID, token) {
 }
 
 /**
- * 获取样本列表
+ * 请求样本列表
  * @param {String} id 样本类比
  * @param {String} startTime 开始时间
  * @param {String} endTime 截止时间
  */
-export function getSampleList(startTime, endTime, id = proto.EntityType.SS_SEISMIC) {
+export function reqSampleList(startTime, endTime, id = proto.EntityType.SS_SEISMIC) {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(6);
   R2S.setParams(`${id},${startTime},${endTime}`);
-  console.log(R2S);
   // 消息主体打包
   let mainPack = new proto.main_packet();
   mainPack.setContent(R2S.serializeBinary());
@@ -54,7 +53,44 @@ export function getSampleList(startTime, endTime, id = proto.EntityType.SS_SEISM
   mainPack.setTime(new Date().getTime());
   console.log(mainPack);
   socketMgr.send(mainPack.serializeBinary());
-  console.log('获取样本列表');
+  console.log('请求样本列表');
+}
+/**
+ * 请求样本数据
+ * @param {*} id 样本ID
+ */
+export function reqSampleData(id) {
+  let R2S = new proto.rqt_2pf_std();
+  R2S.setRqtCode(7);
+  R2S.setParams(`${id}`);
+  // 消息主体打包
+  let mainPack = new proto.main_packet();
+  mainPack.setContent(R2S.serializeBinary());
+  mainPack.setCheck('0');
+  mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
+  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
+  mainPack.setTime(new Date().getTime());
+  console.log(mainPack);
+  socketMgr.send(mainPack.serializeBinary());
+  console.log('请求震动样本数据');
+}
+
+export function reqFftData(sampleID, targetID) {
+  let R2S = new proto.rqt_2pf_std();
+  R2S.setRqtCode(8);
+  R2S.setParams(`${sampleID},${targetID}`);
+  // 消息主体打包
+  let mainPack = new proto.main_packet();
+  mainPack.setContent(R2S.serializeBinary());
+  mainPack.setCheck('0');
+  mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
+  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
+  mainPack.setTime(new Date().getTime());
+  console.log(mainPack);
+  socketMgr.send(mainPack.serializeBinary());
+  console.log('请求傅立叶变换数据');
 }
 
 /**
@@ -150,10 +186,9 @@ export function getPhotoList(sensorId, startTime, endTime) {
   socketMgr.send(mainPack.serializeBinary()) &&
     console.log('发出传感器图片请求');
 
-  console.log(R2S);
 }
 
-// 获取拓扑图数据
+// 请求拓扑图数据
 export function getTopoList() {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(4);
@@ -169,11 +204,10 @@ export function getTopoList() {
 
   socketMgr.send(mainPack.serializeBinary()) && console.log('发出拓扑列表请求');
 
-  console.log(R2S);
 }
 
 /**
- * 获取实体类型
+ * 请求实体类型
  * @param {Number} num
  * @returns
  */
@@ -245,7 +279,7 @@ export function getEntityType(num) {
 }
 
 /**
- * 获取工作模式
+ * 请求工作模式
  * @param {Number} num
  * @returns
  */
@@ -269,7 +303,7 @@ export function getWorkingMode(num) {
 }
 
 /**
- * 获取目标类型
+ * 请求目标类型
  * @param {Number} num
  * @returns
  */

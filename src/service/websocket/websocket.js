@@ -158,7 +158,7 @@ let SocketManager = (function () {
           let ssSignalSample = proto.ss_signal_sample
             .deserializeBinary(content)
             .toObject();
-          // console.log(ssSignalSample);
+          console.log(ssSignalSample);
           store.commit('resolveSample', { ssSignalSample, mainPacket });
           break;
         // 获取样本列表

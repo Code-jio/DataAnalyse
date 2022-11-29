@@ -6,7 +6,9 @@ export default createStore({
         shakeData: [],
         ssSeimicFft: [],
         userID: null,
-        sampleList: []
+        sampleList: [],
+        lastPhotoList: [],
+        photoList: []
     },
     mutations: {
         addShakeData(state, payload) {
@@ -30,8 +32,7 @@ export default createStore({
             state.userID = payload;
         },
         getSampleList(state, payload) {
-            console.log(payload);
-            state.sampleList = payload;
+            state.sampleList = payload.entityTypeList;
         },
         // 解析样本数据
         resolveSample(state, payload) {
@@ -74,6 +75,8 @@ export default createStore({
                 payload.ssSignalSample.sampleValue =
                     'data:image/jpg;base64,' + payload.ssSignalSample.sampleValue;
                 state.photoList.push(payload.ssSignalSample);
+            } else if (payload.mainPacket.originEntityType === proto.EntityType.SS_SEISMIC) {
+                console.log("样本数据");
             }
         },
 

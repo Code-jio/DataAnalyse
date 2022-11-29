@@ -27,14 +27,15 @@
 <script setup>
 import "@/service/proto/proto_main.js";
 import { ref } from "vue";
-import { getSampleList } from "@/service/websocket/send.js";
+import { reqSampleList } from "@/service/websocket/send.js";
 const startTime = ref("");
 const endTime = ref("");
 
 const timeCommit = () => {
   console.log(startTime.value, endTime.value);
+  // getSampleList(0, 0);
   if (startTime.value && endTime.value) {
-    getSampleList(startTime.value, endTime.value);
+    reqSampleList(startTime.value / 1000, endTime.value / 1000);
   } else {
     console.log("未输入参数");
   }
