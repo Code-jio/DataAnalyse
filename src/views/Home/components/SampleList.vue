@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div class="sampleList">
+    
+  </div>
 </template>
 
 <script setup></script>

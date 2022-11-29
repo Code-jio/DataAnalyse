@@ -18,6 +18,8 @@
         placeholder="Select date and time"
       />
     </div>
+
+    <el-button @click="timeCommit()" type="primary">提交</el-button>
   </div>
 </template>
 
@@ -26,6 +28,14 @@ import { ref } from "vue";
 
 const startTime = ref("");
 const endTime = ref("");
+
+const timeCommit = () => {};
 </script>
 
-<style lang="sass" scoped></style>
+<style lang="sass" scoped>
+
+.block{
+  width:300px;
+  border:1px solid #000;
+  }
+</style>

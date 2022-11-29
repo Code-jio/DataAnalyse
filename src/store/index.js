@@ -1,7 +1,8 @@
 import { createStore } from "vuex"
 export default createStore({
     state: {
-        shakeData: []
+        shakeData: [],
+        ssSeimicFft: []
     },
     mutations: {
         addShakeData(state, payload) {
@@ -13,6 +14,13 @@ export default createStore({
             if (state.shakeData.length > 5000) {
                 state.shakeData.splice(0, 20);
             }
+        },
+        addFftData(state, payload) {
+            let data = [];
+            for (let i = 1; i < payload.length; i++) {
+                data.push(payload[i]);
+            }
+            state.ssSeimicFft = data;
         },
     },
     getters: {},

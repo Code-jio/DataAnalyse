@@ -114,14 +114,14 @@ let SocketManager = (function () {
         //     .toObject();
         //   // console.log(ssSeimicEvent);
         //   break;
-        // // 震动信号 快速傅里叶变换
-        // case MessageType.SS_SEISMIC_FFT:
-        //   let ssSeimicFft = proto.ss_seimic_fft
-        //     .deserializeBinary(content)
-        //     .toObject();
-        //   // console.log(ssSeimicFft);
-        //   store.commit('addFftData', ssSeimicFft.sampleValueList);
-        //   break;
+        // 震动信号 快速傅里叶变换
+        case MessageType.SS_SEISMIC_FFT:
+          let ssSeimicFft = proto.ss_seimic_fft
+            .deserializeBinary(content)
+            .toObject();
+          // console.log(ssSeimicFft);
+          store.commit('addFftData', ssSeimicFft.sampleValueList);
+          break;
         // // 地磁原始数据
         // case MessageType.SS_MAGNETIC_RAWSIG:
         //   let ssMagneticRawsig = proto.ss_magnetic_rawsig

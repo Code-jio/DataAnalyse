@@ -1,9 +1,96 @@
 <template>
-  <div class="barChart"></div>
+  <div class="barChart" ref="bar"></div>
 </template>
 
 <script setup>
+import * as echarts from "echarts";
+import { useStore } from "vuex";
+import { ref, onMounted } from "vue";
 
+const bar = ref(null);
+const store = useStore();
 
+const categories = function () {
+  let res = [];
+  for (let i = 0; i < 256; i++) {
+    res.push(i);
+  }
+  return res;
+};
+onMounted(() => {
+  let BarChart = echarts.init(bar.value);
+
+  let option = {
+    title: {
+      text: "傅立叶变换",
+      left: "center",
+    },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "cross",
+        label: {
+          backgroundColor: "#283b56",
+        },
+      },
+    },
+    legend: {},
+    toolbox: {
+      show: true,
+      feature: {
+        dataView: { readOnly: false },
+        restore: {},
+        saveAsImage: {},
+      },
+    },
+    dataZoom: {
+      show: false,
+      start: 0,
+      end: 100,
+    },
+    xAxis: [
+      {
+        type: "category",
+        boundaryGap: true,
+        data: categories(),
+      },
+    ],
+    yAxis: [
+      {
+        type: "value",
+        scale: true,
+        name: "",
+        boundaryGap: [0, 0.2],
+      },
+    ],
+    series: [
+      {
+        name: "",
+        type: "bar",
+        data: store.state.ssSeimicFft,
+      },
+    ],
+  };
+  setInterval(() => {
+    option &&
+      BarChart.setOption({
+        series: [
+          {
+            name: "",
+            type: "bar",
+            data: store.state.ssSeimicFft,
+          },
+        ],
+      });
+  }, 2000);
+  option && BarChart.setOption(option);
+});
 </script>
-<style lang="sass" scoped></style>
+<style lang="sass" scoped>
+.barChart{
+  width: 95%;
+  height: 300px;
+  margin: 3% auto;
+  border: 1px solid #000;
+}
+</style>
