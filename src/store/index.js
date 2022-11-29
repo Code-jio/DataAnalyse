@@ -2,7 +2,8 @@ import { createStore } from "vuex"
 export default createStore({
     state: {
         shakeData: [],
-        ssSeimicFft: []
+        ssSeimicFft: [],
+        userID: null
     },
     mutations: {
         addShakeData(state, payload) {
@@ -22,6 +23,9 @@ export default createStore({
             }
             state.ssSeimicFft = data;
         },
+        getUserID(state, payload) {
+            state.userID = payload
+        }
     },
     getters: {},
     actions: {},

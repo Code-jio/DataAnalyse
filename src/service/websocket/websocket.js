@@ -153,38 +153,45 @@ let SocketManager = (function () {
         //   console.log(Topology_update.statisticList);
         //   store.commit('updateTopo', Topology_update.statisticList);
         //   break;
-        // // 图像传感器 拍摄图片
-        // case MessageType.SS_SIGNAL_SAMPLE:
-        //   let ssSignalSample = proto.ss_signal_sample
-        //     .deserializeBinary(content)
-        //     .toObject();
-        //   // console.log(ssSignalSample);
-        //   store.commit('resolveSample', { ssSignalSample, mainPacket });
-        //   break;
-        // // 登陆回应
-        // case MessageType.PC_LOGON_ASW:
-        //   let pcLogonAsw = proto.pc_logon_asw
-        //     .deserializeBinary(content)
-        //     .toObject();
-        //   // console.log(pcLogonAsw);
-        //   // 判断登录是否成功
-        //   if (pcLogonAsw.rst === true) {
-        //     // 在此处存储登录的token信息
-        //     store.state.userID = pcLogonAsw.id;
-        //     if (!window.localStorage) {
-        //       alert('该设备不支持localstorage');
-        //       return false;
-        //     } else {
-        //       localStorage.setItem(
-        //         'usertoken',
-        //         JSON.stringify(pcLogonAsw.token)
-        //       );
-        //     }
-        //   }
-        //   break;
-        // default:
-        //   console.log('未找到针对此消息的处理方式', mainPacket, content);
-        //   break;
+        // 图像传感器 拍摄图片
+        case MessageType.SS_SIGNAL_SAMPLE:
+          let ssSignalSample = proto.ss_signal_sample
+            .deserializeBinary(content)
+            .toObject();
+          // console.log(ssSignalSample);
+          store.commit('resolveSample', { ssSignalSample, mainPacket });
+          break;
+        // 获取样本列表
+        case MessageType.PC_SAMPLE_LIST:
+          let pcSampleList = proto.pc_sample_list.deserializeBinary(content).toObject();
+          store.commit("getSampleList", pcSampleList)
+          console.log(pcSampleList);
+          break;
+        // 登陆回应
+        case MessageType.PC_LOGON_ASW:
+          let pcLogonAsw = proto.pc_logon_asw
+            .deserializeBinary(content)
+            .toObject();
+          // console.log(pcLogonAsw);
+          // 判断登录是否成功
+          if (pcLogonAsw.rst === true) {
+            // 在此处存储登录的token信息
+            store.commit("getUserID", pcLogonAsw.id)
+
+            if (!window.localStorage) {
+              alert('该设备不支持localstorage');
+              return false;
+            } else {
+              localStorage.setItem(
+                'usertoken',
+                JSON.stringify(pcLogonAsw.token)
+              );
+            }
+          }
+          break;
+        default:
+          console.log('未找到针对此消息的处理方式', mainPacket, content);
+          break;
       }
     };
     // 关闭时
@@ -193,7 +200,6 @@ let SocketManager = (function () {
       // _socket = null;
     };
     this.send = function (args) {
-      console.log(_socket);
       if (!_socket) {
         console.log('连接已关闭或者没有链接成功');
         ElMessage('连接已关闭或者没有链接成功');

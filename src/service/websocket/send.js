@@ -34,6 +34,30 @@ export function takeHDPhoto(sensorId, userID, token) {
 }
 
 /**
+ * 获取样本列表
+ * @param {String} id 样本类比
+ * @param {String} startTime 开始时间
+ * @param {String} endTime 截止时间
+ */
+export function getSampleList(startTime, endTime, id = proto.EntityType.SS_SEISMIC) {
+  let R2S = new proto.rqt_2pf_std();
+  R2S.setRqtCode(6);
+  R2S.setParams(`${id},${startTime},${endTime}`);
+  console.log(R2S);
+  // 消息主体打包
+  let mainPack = new proto.main_packet();
+  mainPack.setContent(R2S.serializeBinary());
+  mainPack.setCheck('0');
+  mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
+  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
+  mainPack.setTime(new Date().getTime());
+  console.log(mainPack);
+  socketMgr.send(mainPack.serializeBinary());
+  console.log('获取样本列表');
+}
+
+/**
  * 发送快速抓拍指令
  * @param { Number } sensorId
  * @param { Number } userID

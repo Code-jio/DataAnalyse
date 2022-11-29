@@ -1,5 +1,5 @@
 <template>
-  <div class="block">
+  <div class="block flex">
     <!-- 开始时间 -->
     <div class="startTime">
       <span class="demonstration">开始时间: </span>
@@ -7,6 +7,8 @@
         v-model="startTime"
         type="datetime"
         placeholder="Select date and time"
+        format="YYYY/MM/DD hh:mm:ss"
+        value-format="x"
       />
     </div>
     <!-- 结束时间 -->
@@ -16,6 +18,8 @@
         v-model="endTime"
         type="datetime"
         placeholder="Select date and time"
+        format="YYYY/MM/DD hh:mm:ss"
+        value-format="x"
       />
     </div>
 
@@ -24,12 +28,19 @@
 </template>
 
 <script setup>
+import "@/service/proto/proto_main.js";
 import { ref } from "vue";
-
+import { getSampleList } from "@/service/websocket/send.js";
 const startTime = ref("");
 const endTime = ref("");
 
-const timeCommit = () => {};
+const timeCommit = () => {
+  if (startTime.value && endTime.value) {
+    getSampleList(startTime.value, endTime.value);
+  } else {
+    console.log("未输入参数");
+  }
+};
 </script>
 
 <style lang="sass" scoped>
