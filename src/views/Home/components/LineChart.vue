@@ -9,18 +9,18 @@ import { ref, onMounted } from "vue";
 
 const chart = ref(null);
 const store = useStore();
-let categories = (num) => {
-  let res = ref([]);
-  for (let k = 0; k < num; k++) {
-    res.value.push[k];
-  }
-  return res;
-};
+// let categories = (num) => {
+//   let res = ref([]);
+//   for (let k = 0; k < num; k++) {
+//     res.value.push[k];
+//   }
+//   return res;
+// };
 
 onMounted(() => {
   let LineChart = echarts.init(chart.value);
   setInterval(() => {
-    console.log(categories(5000));
+    // console.log(categories(5000));
     let option = {
       title: {
         text: "折线图",
