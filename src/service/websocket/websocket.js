@@ -3,6 +3,24 @@ import store from '@/store';
 import { ElMessage } from 'element-plus';
 import '@/service/proto/proto_main.js';
 
+function login(msg) {
+  // 登录信息打包
+  let loginMsg = new proto.pc_logon_request();
+  loginMsg.setUsername(msg.Account);
+  loginMsg.setPassword(msg.Passwd);
+  // 消息主体打包
+  let mainPack = new proto.main_packet();
+  mainPack.setContent(loginMsg.serializeBinary());
+  mainPack.setCheck('0');
+  mainPack.setMessageType(proto.MessageType.PC_LOGON_REQUEST);
+  mainPack.setOriginEntityId(msg.id); // 登陆设备id
+  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
+  mainPack.setTime(new Date().getTime());
+  console.log('成功发送登录信息', mainPack.serializeBinary());
+  return mainPack.serializeBinary();
+}
+
+
 let url = 'ws://172.16.100.240:20002';
 let _socket;
 // 没有服务器的前提下 用浏览器作为运行环境 寻找用于绘图的包
@@ -44,6 +62,7 @@ let SocketManager = (function () {
     };
     this.onOpen = function () {
       console.log('连接成功');
+      this.send(login({ Account: "test", Passwd: "test" }))
       MessageType = proto.MessageType;
       // console.log(MessageType);
     };
@@ -71,16 +90,16 @@ let SocketManager = (function () {
       // 通过消息类型判断 再根据消息类型对主包内容进行解码
       switch (mainPacket.messageType) {
         //  传感器状态无线信号数据
-        case MessageType.SS_WIRELESS_STATUS:
-          let ssSensorStatus = proto.ss_sensor_status
-            .deserializeBinary(content)
-            .toObject();
-          store.commit('addSersorStatus', {
-            ssSensorStatus,
-            mainPacket
-          });
-          // console.log(ssSensorStatus, mainPacket, '无线信号')
-          break;
+        // case MessageType.SS_WIRELESS_STATUS:
+        //   let ssSensorStatus = proto.ss_sensor_status
+        //     .deserializeBinary(content)
+        //     .toObject();
+        //   store.commit('addSersorStatus', {
+        //     ssSensorStatus,
+        //     mainPacket
+        //   });
+        //   // console.log(ssSensorStatus, mainPacket, '无线信号')
+        //   break;
         // 震动信号原始数据
         case MessageType.SS_SEISMIC_RAWSIG:
           let ssSeimicRawsig = proto.ss_seimic_rawsig
@@ -89,83 +108,83 @@ let SocketManager = (function () {
           store.commit('addShakeData', ssSeimicRawsig.sampleValueList);
           break;
         // 震动事件
-        case MessageType.SS_SEISMIC_EVEVT:
-          let ssSeimicEvent = proto.ss_seimic_event
-            .deserializeBinary(content)
-            .toObject();
-          // console.log(ssSeimicEvent);
-          break;
-        // 震动信号 快速傅里叶变换
-        case MessageType.SS_SEISMIC_FFT:
-          let ssSeimicFft = proto.ss_seimic_fft
-            .deserializeBinary(content)
-            .toObject();
-          // console.log(ssSeimicFft);
-          store.commit('addFftData', ssSeimicFft.sampleValueList);
-          break;
-        // 地磁原始数据
-        case MessageType.SS_MAGNETIC_RAWSIG:
-          let ssMagneticRawsig = proto.ss_magnetic_rawsig
-            .deserializeBinary(content)
-            .toObject();
-          // console.log(ssMagneticRawsig);
-          store.commit('addMagneticRawsig', ssMagneticRawsig.sampleValue);
-          break;
-        // 地磁事件
-        case MessageType.SS_MAGNETIC_EVENT:
-          let ssMagneticEvent = proto.ss_magnetic_event
-            .deserializeBinary(content)
-            .toObject();
-          console.log('地磁事件', ssMagneticEvent);
-          store.commit('addEvent', { ssMagneticEvent, mainPacket });
-          break;
-        // 温度传感器原始数据--温度、湿度
-        case MessageType.SS_2DOUBLES_STD:
-          let ss2DoublesStd = proto.ss_2doubles_std
-            .deserializeBinary(content)
-            .toObject();
-          store.commit('addHumiture', ss2DoublesStd);
-          break;
-        // 更新拓扑图
-        case MessageType.PC_TOPOLOGY_UPDATE:
-          let Topology_update = proto.pc_topology_update
-            .deserializeBinary(content)
-            .toObject();
-          console.log(Topology_update.statisticList);
-          store.commit('updateTopo', Topology_update.statisticList);
-          break;
-        // 图像传感器 拍摄图片
-        case MessageType.SS_SIGNAL_SAMPLE:
-          let ssSignalSample = proto.ss_signal_sample
-            .deserializeBinary(content)
-            .toObject();
-          // console.log(ssSignalSample);
-          store.commit('resolveSample', { ssSignalSample, mainPacket });
-          break;
-        // 登陆回应
-        case MessageType.PC_LOGON_ASW:
-          let pcLogonAsw = proto.pc_logon_asw
-            .deserializeBinary(content)
-            .toObject();
-          // console.log(pcLogonAsw);
-          // 判断登录是否成功
-          if (pcLogonAsw.rst === true) {
-            // 在此处存储登录的token信息
-            store.state.userID = pcLogonAsw.id;
-            if (!window.localStorage) {
-              alert('该设备不支持localstorage');
-              return false;
-            } else {
-              localStorage.setItem(
-                'usertoken',
-                JSON.stringify(pcLogonAsw.token)
-              );
-            }
-          }
-          break;
-        default:
-          console.log('未找到针对此消息的处理方式', mainPacket, content);
-          break;
+        // case MessageType.SS_SEISMIC_EVEVT:
+        //   let ssSeimicEvent = proto.ss_seimic_event
+        //     .deserializeBinary(content)
+        //     .toObject();
+        //   // console.log(ssSeimicEvent);
+        //   break;
+        // // 震动信号 快速傅里叶变换
+        // case MessageType.SS_SEISMIC_FFT:
+        //   let ssSeimicFft = proto.ss_seimic_fft
+        //     .deserializeBinary(content)
+        //     .toObject();
+        //   // console.log(ssSeimicFft);
+        //   store.commit('addFftData', ssSeimicFft.sampleValueList);
+        //   break;
+        // // 地磁原始数据
+        // case MessageType.SS_MAGNETIC_RAWSIG:
+        //   let ssMagneticRawsig = proto.ss_magnetic_rawsig
+        //     .deserializeBinary(content)
+        //     .toObject();
+        //   // console.log(ssMagneticRawsig);
+        //   store.commit('addMagneticRawsig', ssMagneticRawsig.sampleValue);
+        //   break;
+        // // 地磁事件
+        // case MessageType.SS_MAGNETIC_EVENT:
+        //   let ssMagneticEvent = proto.ss_magnetic_event
+        //     .deserializeBinary(content)
+        //     .toObject();
+        //   console.log('地磁事件', ssMagneticEvent);
+        //   store.commit('addEvent', { ssMagneticEvent, mainPacket });
+        //   break;
+        // // 温度传感器原始数据--温度、湿度
+        // case MessageType.SS_2DOUBLES_STD:
+        //   let ss2DoublesStd = proto.ss_2doubles_std
+        //     .deserializeBinary(content)
+        //     .toObject();
+        //   store.commit('addHumiture', ss2DoublesStd);
+        //   break;
+        // // 更新拓扑图
+        // case MessageType.PC_TOPOLOGY_UPDATE:
+        //   let Topology_update = proto.pc_topology_update
+        //     .deserializeBinary(content)
+        //     .toObject();
+        //   console.log(Topology_update.statisticList);
+        //   store.commit('updateTopo', Topology_update.statisticList);
+        //   break;
+        // // 图像传感器 拍摄图片
+        // case MessageType.SS_SIGNAL_SAMPLE:
+        //   let ssSignalSample = proto.ss_signal_sample
+        //     .deserializeBinary(content)
+        //     .toObject();
+        //   // console.log(ssSignalSample);
+        //   store.commit('resolveSample', { ssSignalSample, mainPacket });
+        //   break;
+        // // 登陆回应
+        // case MessageType.PC_LOGON_ASW:
+        //   let pcLogonAsw = proto.pc_logon_asw
+        //     .deserializeBinary(content)
+        //     .toObject();
+        //   // console.log(pcLogonAsw);
+        //   // 判断登录是否成功
+        //   if (pcLogonAsw.rst === true) {
+        //     // 在此处存储登录的token信息
+        //     store.state.userID = pcLogonAsw.id;
+        //     if (!window.localStorage) {
+        //       alert('该设备不支持localstorage');
+        //       return false;
+        //     } else {
+        //       localStorage.setItem(
+        //         'usertoken',
+        //         JSON.stringify(pcLogonAsw.token)
+        //       );
+        //     }
+        //   }
+        //   break;
+        // default:
+        //   console.log('未找到针对此消息的处理方式', mainPacket, content);
+        //   break;
       }
     };
     // 关闭时

@@ -85,6 +85,7 @@ export function login(msg) {
   return mainPack.serializeBinary();
 }
 
+
 // 请求传感器信息
 export function getSensorList() {
   let R2S = new proto.rqt_2pf_std();
