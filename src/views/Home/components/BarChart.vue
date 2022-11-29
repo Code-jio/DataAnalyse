@@ -18,9 +18,10 @@ const categories = function () {
   return res;
 };
 onMounted(() => {
-  let BarChart = echarts.init(bar.value);
+  let BarChart = echarts.init(bar.value, "dark");
 
   let option = {
+    backgroundColor: "",
     title: {
       text: "傅立叶变换",
       left: "center",
@@ -88,9 +89,10 @@ onMounted(() => {
 </script>
 <style lang="sass" scoped>
 .barChart{
-  width: 95%;
+  width: 98%;
   height: 300px;
-  margin: 3% auto;
+  margin: 0 auto;
   border: 1px solid #000;
+  background-color: rgb(15,12,40);
 }
 </style>

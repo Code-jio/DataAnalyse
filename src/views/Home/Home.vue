@@ -1,10 +1,24 @@
 <!-- eslint-disable -->
 <template>
-  <div class="home">
-    <TimePicker></TimePicker>
-    <sample-list></sample-list>
-    <LineChart></LineChart>
-    <BarChart></BarChart>
+  <div class="common-layout">
+    <el-container>
+      <!-- 侧栏 样本列表 -->
+      <el-aside>
+        <SampleList></SampleList>
+      </el-aside>
+      <el-container>
+        <!-- 顶部 时间选择 -->
+        <el-header height="20px">
+          <TimePicker></TimePicker>
+        </el-header>
+        <!-- 统计图 主体部分 -->
+        <el-main>
+          <LineChart></LineChart>
+          <BarChart></BarChart>
+          <PhotoList></PhotoList>
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 <script setup>
@@ -12,5 +26,6 @@ import BarChart from "./components/BarChart.vue";
 import LineChart from "./components/LineChart.vue";
 import TimePicker from "./components/TimePicker.vue";
 import SampleList from "./components/SampleList.vue";
+import PhotoList from "./components/PhotoList.vue";
 </script>
 <style lang="sass" scoped></style>

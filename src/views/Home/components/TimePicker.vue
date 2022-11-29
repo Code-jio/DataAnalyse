@@ -1,27 +1,24 @@
 <template>
   <div class="block flex">
     <!-- 开始时间 -->
-    <div class="startTime">
-      <span class="demonstration">开始时间: </span>
-      <el-date-picker
-        v-model="startTime"
-        type="datetime"
-        placeholder="Select date and time"
-        format="YYYY/MM/DD hh:mm:ss"
-        value-format="x"
-      />
-    </div>
-    <!-- 结束时间 -->
-    <div class="endTime">
-      <span class="demonstration">结束时间: </span>
-      <el-date-picker
-        v-model="endTime"
-        type="datetime"
-        placeholder="Select date and time"
-        format="YYYY/MM/DD hh:mm:ss"
-        value-format="x"
-      />
-    </div>
+
+    <span class="demonstration">开始时间: </span>
+    <el-date-picker
+      v-model="startTime"
+      type="datetime"
+      placeholder="Select date and time"
+      format="YYYY/MM/DD hh:mm:ss"
+      value-format="x"
+    />
+
+    <span class="demonstration">结束时间: </span>
+    <el-date-picker
+      v-model="endTime"
+      type="datetime"
+      placeholder="Select date and time"
+      format="YYYY/MM/DD hh:mm:ss"
+      value-format="x"
+    />
 
     <el-button @click="timeCommit()" type="primary">提交</el-button>
   </div>
@@ -35,6 +32,7 @@ const startTime = ref("");
 const endTime = ref("");
 
 const timeCommit = () => {
+  console.log(startTime.value, endTime.value);
   if (startTime.value && endTime.value) {
     getSampleList(startTime.value, endTime.value);
   } else {
@@ -46,7 +44,8 @@ const timeCommit = () => {
 <style lang="sass" scoped>
 
 .block{
-  width:300px;
-  border:1px solid #000;
+  width: 100%;
+  height: 100%;
+  margin-left: 1%;
   }
 </style>

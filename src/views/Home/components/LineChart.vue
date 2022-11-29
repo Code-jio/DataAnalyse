@@ -11,11 +11,12 @@ const chart = ref(null);
 const store = useStore();
 
 onMounted(() => {
-  let LineChart = echarts.init(chart.value);
+  let LineChart = echarts.init(chart.value, "dark");
   setInterval(() => {
     let option = {
+      backgroundColor: "",
       title: {
-        text: "折线图",
+        text: "震动信号",
         left: "center",
       },
       xAxis: [
@@ -49,7 +50,11 @@ onMounted(() => {
           dataView: { readOnly: false },
           restore: {},
           saveAsImage: {},
+          maginType: {
+            type: ["line", "bar"],
+          },
         },
+        showTitle: true,
       },
     };
 
@@ -59,9 +64,10 @@ onMounted(() => {
 </script>
 <style lang="sass" scoped>
 .chart{
-  width: 95%;
+  width: 98%;
   height: 300px;
-  margin: 3% auto;
+  margin: 30px auto;
   border: 1px solid #000;
+  background-color:  rgb(15,12,40);
 }
 </style>

@@ -165,7 +165,7 @@ let SocketManager = (function () {
         case MessageType.PC_SAMPLE_LIST:
           let pcSampleList = proto.pc_sample_list.deserializeBinary(content).toObject();
           store.commit("getSampleList", pcSampleList)
-          console.log(pcSampleList);
+          // console.log(pcSampleList);
           break;
         // 登陆回应
         case MessageType.PC_LOGON_ASW:
