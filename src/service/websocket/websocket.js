@@ -101,12 +101,12 @@ let SocketManager = (function () {
         //   // console.log(ssSensorStatus, mainPacket, '无线信号')
         //   break;
         // 震动信号原始数据
-        case MessageType.SS_SEISMIC_RAWSIG:
-          let ssSeimicRawsig = proto.ss_seimic_rawsig
-            .deserializeBinary(content)
-            .toObject();
-          store.commit('addShakeData', ssSeimicRawsig.sampleValueList);
-          break;
+        // case MessageType.SS_SEISMIC_RAWSIG:
+        //   let ssSeimicRawsig = proto.ss_seimic_rawsig
+        //     .deserializeBinary(content)
+        //     .toObject();
+        //   store.commit('addShakeData', ssSeimicRawsig.sampleValueList);
+        //   break;
         // 震动事件
         // case MessageType.SS_SEISMIC_EVEVT:
         //   let ssSeimicEvent = proto.ss_seimic_event
@@ -155,10 +155,10 @@ let SocketManager = (function () {
         //   break;
         // 图像传感器 拍摄图片
         case MessageType.SS_SIGNAL_SAMPLE:
-          let ssSignalSample = proto.ss_signal_sample
-            .deserializeBinary(content)
-            .toObject();
-          console.log(ssSignalSample);
+          // proto_main.js 默认按照Base64格式解码 除图片外的其他类型数据建议按Base64反解码
+          let ssSignalSample = proto.ss_signal_sample.deserializeBinary(content).toObject();
+          let sampleValue = proto.ss_signal_sample.deserializeBinary(content).getSampleValue()
+          ssSignalSample.sampleValue = sampleValue
           store.commit('resolveSample', { ssSignalSample, mainPacket });
           break;
         // 获取样本列表
@@ -190,7 +190,7 @@ let SocketManager = (function () {
           }
           break;
         default:
-          console.log('未找到针对此消息的处理方式', mainPacket, content);
+          // console.log('未找到针对此消息的处理方式', mainPacket, content);
           break;
       }
     };
@@ -228,7 +228,7 @@ let SocketManager = (function () {
   //return { instance: (function() { _me || (_me = new SocketManager()); return _me; })() };
 })();
 
-//module.exports=SocketManager.instance;
+// module.exports=SocketManager.instance;
 
 const a = SocketManager.instance;
 a.connect(0, 0, 1);

@@ -2,7 +2,7 @@
   <div class="sampleList">
     <el-table
       :data="sampleList"
-      height="250"
+      height="600"
       style="width: 100%"
       @row-click="getRowSignal"
     >
@@ -32,7 +32,7 @@ const getRowSignal = (e) => {
 .sampleList {
   margin:0 auto;
   width: 98%;
-  height:95%;
+  // height:%;
   // background-color: lightblue;
 }
 </style>

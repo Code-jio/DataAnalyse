@@ -3,14 +3,13 @@
   <div class="common-layout">
     <el-container>
       <!-- 侧栏 样本列表 -->
-      <el-aside>
+      <el-aside width="400px">
+        <TimePicker></TimePicker>
         <SampleList></SampleList>
       </el-aside>
       <el-container>
         <!-- 顶部 时间选择 -->
-        <el-header height="20px">
-          <TimePicker></TimePicker>
-        </el-header>
+        <el-header height="10px"> </el-header>
         <!-- 统计图 主体部分 -->
         <el-main>
           <LineChart></LineChart>

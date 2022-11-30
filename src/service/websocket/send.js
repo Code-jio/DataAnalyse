@@ -51,7 +51,7 @@ export function reqSampleList(startTime, endTime, id = proto.EntityType.SS_SEISM
   mainPack.setOriginEntityId(store.state.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
-  console.log(mainPack);
+  // console.log(mainPack);
   socketMgr.send(mainPack.serializeBinary());
   console.log('请求样本列表');
 }
@@ -71,7 +71,7 @@ export function reqSampleData(id) {
   mainPack.setOriginEntityId(store.state.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
-  console.log(mainPack);
+  // console.log(mainPack);
   socketMgr.send(mainPack.serializeBinary());
   console.log('请求震动样本数据');
 }
@@ -88,7 +88,6 @@ export function reqFftData(sampleID, targetID) {
   mainPack.setOriginEntityId(store.state.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
-  console.log(mainPack);
   socketMgr.send(mainPack.serializeBinary());
   console.log('请求傅立叶变换数据');
 }

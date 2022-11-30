@@ -12,54 +12,54 @@ const store = useStore();
 
 onMounted(() => {
   let LineChart = echarts.init(chart.value, "dark");
-  setInterval(() => {
-    let option = {
-      backgroundColor: "",
-      title: {
-        text: "震动信号",
-        left: "center",
-      },
-      xAxis: [
-        {
-          type: "category",
-          // data: categories.value,
-          data: [],
-        },
-      ],
-      yAxis: {
-        type: "value",
-      },
-      legend: {
-        left: "left",
-        // 图例的布局朝向
-        orient: "verical",
-      },
-      series: [
-        {
-          type: "line",
-          data: store.state.shakeData,
-          smooth: true, // 开启平滑过渡
-          markLine: {
-            // data: [{ type: 'average', name: '平均值' }]
-          },
-        },
-      ],
-      toolbox: {
-        show: true,
-        feature: {
-          dataView: { readOnly: false },
-          restore: {},
-          saveAsImage: {},
-          maginType: {
-            type: ["line", "bar"],
-          },
-        },
-        showTitle: true,
-      },
-    };
 
+  let option = {
+    backgroundColor: "",
+    title: {
+      text: "震动信号",
+      left: "center",
+    },
+    xAxis: [
+      {
+        type: "category",
+        // data: categories.value,
+        data: [],
+      },
+    ],
+    yAxis: {
+      type: "value",
+    },
+    legend: {
+      left: "left",
+      // 图例的布局朝向
+      orient: "verical",
+    },
+    series: [
+      {
+        type: "line",
+        data: [...store.state.shakeData],
+        smooth: true, // 开启平滑过渡
+        markLine: {
+          // data: [{ type: 'average', name: '平均值' }]
+        },
+      },
+    ],
+    toolbox: {
+      show: true,
+      feature: {
+        dataView: { readOnly: false },
+        restore: {},
+        saveAsImage: {},
+        maginType: {
+          type: ["line", "bar"],
+        },
+      },
+      showTitle: true,
+    },
+  };
+  setInterval(() => {
     LineChart.setOption(option);
-  }, 50);
+  }, 100);
 });
 </script>
 <style lang="sass" scoped>

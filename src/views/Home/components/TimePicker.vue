@@ -10,7 +10,7 @@
       format="YYYY/MM/DD hh:mm:ss"
       value-format="x"
     />
-
+    <br />
     <span class="demonstration">结束时间: </span>
     <el-date-picker
       v-model="endTime"
@@ -19,8 +19,8 @@
       format="YYYY/MM/DD hh:mm:ss"
       value-format="x"
     />
-
-    <el-button @click="timeCommit()" type="primary">提交</el-button>
+    <br />
+    <el-button class="btn" @click="timeCommit()" type="primary">提交</el-button>
   </div>
 </template>
 
@@ -45,8 +45,11 @@ const timeCommit = () => {
 <style lang="sass" scoped>
 
 .block{
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  // height: 100%;
   margin-left: 1%;
+  .btn {
+    margin: 0 auto;
   }
+}
 </style>
