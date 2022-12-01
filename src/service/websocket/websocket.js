@@ -2,8 +2,9 @@
 import store from '@/store';
 import { ElMessage } from 'element-plus';
 import '@/service/proto/proto_main.js';
-
-function login(msg) {
+import { sendSubscribeTable } from "./send.js"
+import subscribeTable from '../../utils/subscribeTable.js';
+function sendLoginMsg(msg) {
   // 登录信息打包
   let loginMsg = new proto.pc_logon_request();
   loginMsg.setUsername(msg.Account);
@@ -62,7 +63,7 @@ let SocketManager = (function () {
     };
     this.onOpen = function () {
       console.log('连接成功');
-      this.send(login({ Account: "test", Passwd: "test" }))
+      this.send(sendLoginMsg({ Account: "test", Passwd: "test" }))
       MessageType = proto.MessageType;
       // console.log(MessageType);
     };
@@ -187,9 +188,9 @@ let SocketManager = (function () {
           // console.log(pcLogonAsw);
           // 判断登录是否成功
           if (pcLogonAsw.rst === true) {
-            // 在此处存储登录的token信息
+            // 在此处存储登录的token信息,并发送消息订阅表
             store.commit("getUserID", pcLogonAsw.id)
-
+            this.send(sendSubscribeTable(subscribeTable))
             if (!window.localStorage) {
               alert('该设备不支持localstorage');
               return false;

@@ -2,6 +2,8 @@
 import '@/service/proto/proto_main.js';
 import socketMgr from '@/service/websocket/websocket';
 import store from '@/store'; //在js文件引入store模块
+
+
 /**
  * 发送高清抓拍指令
  * @param { Number } sensorId
@@ -35,7 +37,7 @@ export function takeHDPhoto(sensorId, userID, token) {
 
 /**
  * 请求样本列表
- * @param {String} id 样本类比
+ * @param {String} id 样本ID
  * @param {String} startTime 开始时间
  * @param {String} endTime 截止时间
  */
@@ -57,7 +59,7 @@ export function reqSampleList(startTime, endTime, id = proto.EntityType.SS_SEISM
 }
 /**
  * 请求样本数据
- * @param {*} id 样本ID
+ * @param { Number } id 样本ID
  */
 export function reqSampleData(id) {
   let R2S = new proto.rqt_2pf_std();
@@ -76,6 +78,11 @@ export function reqSampleData(id) {
   console.log('请求震动样本数据');
 }
 
+/**
+ * 请求傅立叶变换数据
+ * @param { Number } sampleID 样本ID
+ * @param { Number } targetID 目标ID
+ */
 export function reqFftData(sampleID, targetID = store.state.userID) {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(8);
@@ -144,6 +151,27 @@ export function login(msg) {
   return mainPack.serializeBinary();
 }
 
+/**
+ * 发送订阅表
+ * @param { Array } msg 订阅表
+ * @returns 打包后的主包
+ */
+export function sendSubscribeTable(msg) {
+  // 登录信息打包
+  let pcEntityRegister = new proto.pc_entity_register();
+  pcEntityRegister.setSubscribeTable(msg);
+  // 消息主体打包
+  let mainPack = new proto.main_packet();
+  mainPack.setContent(pcEntityRegister.serializeBinary());
+  mainPack.setCheck('0');
+  mainPack.setMessageType(proto.MessageType.PC_ENTITY_REGISTER);
+  mainPack.setOriginEntityId(msg.id); // 登陆设备id
+  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
+  mainPack.setTime(new Date().getTime());
+  socketMgr.send(mainPack.serializeBinary());
+  // console.log('发送订阅表', mainPack.serializeBinary());
+  return mainPack.serializeBinary();
+}
 
 // 请求传感器信息
 export function getSensorList() {
@@ -200,9 +228,7 @@ export function getTopoList() {
   mainPack.setOriginEntityId(store.state.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
-
   socketMgr.send(mainPack.serializeBinary()) && console.log('发出拓扑列表请求');
-
 }
 
 /**
