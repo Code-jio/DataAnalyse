@@ -13,7 +13,8 @@ export default createStore({
         sampleList: [],
         lastPhotoList: [],
         photoList: [],
-        sampleTag: {}
+        sampleTag: {},
+        sampleClassifyInfo: {}
     },
     mutations: {
         // 获取傅立叶变换数据
@@ -30,7 +31,6 @@ export default createStore({
         },
         // 获取样本列表
         getSampleList(state, payload) {
-            console.log(payload);
             for (let i = 0; i < payload.sampleListList.length; i++) {
                 payload.sampleListList[i].time = getTime(payload.sampleListList[i].time * 1000)
             }
@@ -42,7 +42,7 @@ export default createStore({
             // 处理图片数据
             // 判断设备类型
             if (payload.mainPacket.originEntityType === proto.EntityType.SS_CAMERA) {
-                console.log("图片源自摄像头");
+                console.log("图片源自摄像头", payload.mainPacket);
                 payload.ssSignalSample.sampleValue =
                     'data:image/jpg;base64,' + payload.ssSignalSample.sampleValue;
                 // 当数组为空 兜底
@@ -82,6 +82,10 @@ export default createStore({
         // 存储样本标签
         getTag(state, payload) {
             state.sampleTag = payload
+        },
+        // 存储样本分类结果
+        getSPClassifyInfo(state, payload) {
+            state.sampleClassifyInfo = payload
         }
     },
     getters: {},

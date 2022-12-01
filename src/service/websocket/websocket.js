@@ -105,7 +105,7 @@ let SocketManager = (function () {
         //   });
         //   // console.log(ssSensorStatus, mainPacket, '无线信号')
         //   break;
-        // 震动信号原始数据
+        // // 震动信号原始数据
         // case MessageType.SS_SEISMIC_RAWSIG:
         //   let ssSeimicRawsig = proto.ss_seimic_rawsig
         //     .deserializeBinary(content)
@@ -125,15 +125,23 @@ let SocketManager = (function () {
             .deserializeBinary(content)
             .toObject();
           // console.log(ssSeimicFft);
-
           store.commit('addFftData', ssSeimicFft.sampleValueList);
           break;
+        // 样本分类信息
         case MessageType.SP_CLASIFY_INFO:
           let spClasifyInfo = proto.sp_clasify_info
             .deserializeBinary(content)
             .toObject();
-          console.log(spClasifyInfo, mainPacket);
-          store.commit('getTag', spClasifyInfo);
+          console.log(spClasifyInfo, "已获取样本分类信息");
+          store.commit('getSPClassifyInfo', spClasifyInfo);
+          break;
+        // 样本分类信息
+        case MessageType.ALGO_CLASSIFY_RST:
+          let algoClassifyRst = proto.algo_classify_rst
+            .deserializeBinary(content)
+            .toObject();
+          console.log(algoClassifyRst, "已获取样本分类信息");
+          store.commit('getTag', algoClassifyRst);
           break;
         // // 地磁原始数据
         // case MessageType.SS_MAGNETIC_RAWSIG:
@@ -178,7 +186,7 @@ let SocketManager = (function () {
         case MessageType.PC_SAMPLE_LIST:
           let pcSampleList = proto.pc_sample_list.deserializeBinary(content).toObject();
           store.commit("getSampleList", pcSampleList)
-          // console.log(pcSampleList);
+          console.log(pcSampleList, "已获取样本列表");
           break;
         // 登陆回应
         case MessageType.PC_LOGON_ASW:

@@ -2,7 +2,7 @@
   <div class="sampleList">
     <el-table
       :data="sampleList"
-      height="600"
+      height="500"
       style="width: 100%"
       @row-click="getRowSignal"
     >
@@ -16,16 +16,20 @@
 import emitter from "@/utils/eventBus.js";
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { reqSampleData, reqFftData } from "@/service/websocket/send.js";
-// const data = ref([]);
+import {
+  reqSampleData,
+  reqFftData,
+  reqSampleClassifyRes,
+} from "@/service/websocket/send.js";
 
 const store = useStore();
 const sampleList = computed(() => store.state.sampleList);
 
-// 请求震动样本数据及傅立叶变换数据
+// 请求震动样本数据、傅立叶变换数据、样本分类结果
 const getRowSignal = (e) => {
   reqSampleData(e.id);
   reqFftData(e.id);
+  reqSampleClassifyRes(e.id);
   emitter.emit("sendRow", e);
 };
 </script>

@@ -102,7 +102,6 @@ export function reqFftData(sampleID, targetID = store.state.userID) {
 /**
  * 请求删除样本数据
  * @param { Number } sampleID 样本ID
- * @param { Number } targetID 目标ID
  */
 export function reqDeleteSample(sampleID) {
   let R2S = new proto.rqt_2pf_std();
@@ -117,7 +116,27 @@ export function reqDeleteSample(sampleID) {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  console.log('请求傅立叶变换数据');
+  console.log('请求删除样本数据');
+}
+
+/**
+ * 请求样本分类结果
+ * @param { Number } sampleID 样本ID
+ */
+export function reqSampleClassifyRes(sampleID) {
+  let R2S = new proto.rqt_2pf_std();
+  R2S.setRqtCode(10);
+  R2S.setParams(`${sampleID}`);
+  // 消息主体打包
+  let mainPack = new proto.main_packet();
+  mainPack.setContent(R2S.serializeBinary());
+  mainPack.setCheck('0');
+  mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
+  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
+  mainPack.setTime(new Date().getTime());
+  socketMgr.send(mainPack.serializeBinary());
+  console.log('请求样本分类结果', R2S);
 }
 
 /**
