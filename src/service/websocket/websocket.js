@@ -75,6 +75,10 @@ let SocketManager = (function () {
       let mainPack_Ser = proto.main_packet.deserializeBinary(evt);
       // 主包转化为解析度较高的对象形式
       let mainPacket = proto.main_packet.deserializeBinary(evt).toObject();
+      // if (mainPacket.destEntityId === 0) {
+      //   console.log(mainPacket);
+      //   return
+      // }
       // 获取主包中的内容（Arraybuffer格式）
       let content = mainPack_Ser.getContent();
 
@@ -120,7 +124,15 @@ let SocketManager = (function () {
             .deserializeBinary(content)
             .toObject();
           // console.log(ssSeimicFft);
+
           store.commit('addFftData', ssSeimicFft.sampleValueList);
+          break;
+        case MessageType.ALGO_CLASSIFY_RST:
+          let AlgoClassifyRst = proto.algo_classify_rst
+            .deserializeBinary(content)
+            .toObject();
+          console.log(AlgoClassifyRst, mainPacket);
+          store.commit('getTag', AlgoClassifyRst);
           break;
         // // 地磁原始数据
         // case MessageType.SS_MAGNETIC_RAWSIG:

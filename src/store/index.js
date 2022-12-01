@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { createStore } from "vuex"
+import { getTime } from "@/utils/utils.js"
 import {
     decodeBuffer, getArr
 } from "@/utils/dataTransform.js"
@@ -12,6 +13,7 @@ export default createStore({
         sampleList: [],
         lastPhotoList: [],
         photoList: [],
+        sampleTag: {}
     },
     mutations: {
         // addShakeData(state, payload) {
@@ -35,6 +37,9 @@ export default createStore({
             state.userID = payload;
         },
         getSampleList(state, payload) {
+            for (let i = 0; i < payload.entityTypeList.length; i++) {
+                payload.entityTypeList[i].time = getTime(payload.entityTypeList[i].time * 1000)
+            }
             state.sampleList = payload.entityTypeList;
         },
         // 解析样本数据
@@ -67,11 +72,10 @@ export default createStore({
             } else if (payload.mainPacket.originEntityType === proto.EntityType.PC_DBPROXY) {
 
                 if (payload.ssSignalSample.originEntityType === proto.EntityType.SS_SEISMIC) {
-                    console.log("接收的是数据库中的震动信号样本数据");
+                    console.log("接收的是数据库中的震动信号样本数据", payload.mainPacket);
                     getArr(decodeBuffer(payload.ssSignalSample.sampleValue))
                     payload.ssSignalSample.sampleValue = getArr(decodeBuffer(payload.ssSignalSample.sampleValue))
                     state.shakeData = payload.ssSignalSample.sampleValue;
-                    console.log([...state.shakeData]);
                 } else if (payload.ssSignalSample.originEntityType === proto.EntityType.SS_CAMERA) {
                     console.log("接收的是数据库中的图片");
                     // console.log(payload.ssSignalSample);
@@ -81,7 +85,10 @@ export default createStore({
                 }
             }
         },
-
+        // 存储样本标签
+        getTag(state, payload) {
+            state.sampleTag = payload
+        }
     },
     getters: {},
     actions: {},

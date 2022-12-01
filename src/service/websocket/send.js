@@ -76,7 +76,7 @@ export function reqSampleData(id) {
   console.log('请求震动样本数据');
 }
 
-export function reqFftData(sampleID, targetID) {
+export function reqFftData(sampleID, targetID = store.state.userID) {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(8);
   R2S.setParams(`${sampleID},${targetID}`);

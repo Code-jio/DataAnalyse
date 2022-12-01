@@ -6,6 +6,7 @@
       <el-aside width="400px">
         <TimePicker></TimePicker>
         <SampleList></SampleList>
+        <ShowTags></ShowTags>
       </el-aside>
       <el-container>
         <!-- 顶部 时间选择 -->
@@ -26,5 +27,6 @@ import LineChart from "./components/LineChart.vue";
 import TimePicker from "./components/TimePicker.vue";
 import SampleList from "./components/SampleList.vue";
 import PhotoList from "./components/PhotoList.vue";
+import ShowTags from "./components/ShowTags.vue";
 </script>
 <style lang="sass" scoped></style>

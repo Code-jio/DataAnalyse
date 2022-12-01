@@ -15,6 +15,7 @@
 
 <script setup>
 import { computed } from "vue";
+// import { getTime } from "@/utils/utils.js";
 import { useStore } from "vuex";
 import { reqSampleData, reqFftData } from "@/service/websocket/send.js";
 // const data = ref([]);
