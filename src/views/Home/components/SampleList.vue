@@ -2,7 +2,7 @@
   <div class="sampleList">
     <el-table
       :data="sampleList"
-      height="500"
+      height="400"
       style="width: 100%"
       @row-click="getRowSignal"
     >
@@ -10,6 +10,7 @@
       <el-table-column prop="time" label="时间"></el-table-column>
     </el-table>
   </div>
+  <el-divider />
 </template>
 
 <script setup>

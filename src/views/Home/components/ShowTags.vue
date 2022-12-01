@@ -55,11 +55,6 @@
         <el-radio-button label="未分类" />
         <el-radio-button label="其他" />
       </el-radio-group>
-      <el-divider direction="vertical" />
-      <el-divider direction="vertical" />
-      <el-divider direction="vertical" />
-      <el-divider direction="vertical" />
-      <el-button color="#626aef">确定</el-button>
     </div>
   </div>
 </template>

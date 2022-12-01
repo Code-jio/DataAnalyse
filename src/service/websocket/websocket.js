@@ -68,7 +68,7 @@ let SocketManager = (function () {
       // console.log(MessageType);
     };
     this.onMessage = function ({ data }) {
-      // console.log(data);
+      console.log(data);
       if (!(data instanceof ArrayBuffer)) return;
       // let mainPacket = main_packet.decode(util.decodeBuffer(data));
       // new 主包解析
@@ -198,7 +198,7 @@ let SocketManager = (function () {
           if (pcLogonAsw.rst === true) {
             // 在此处存储登录的token信息,并发送消息订阅表
             store.commit("getUserID", pcLogonAsw.id)
-            this.send(sendSubscribeTable(subscribeTable))
+            sendSubscribeTable(subscribeTable)
             if (!window.localStorage) {
               alert('该设备不支持localstorage');
               return false;
