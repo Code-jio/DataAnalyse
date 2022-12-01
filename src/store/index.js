@@ -16,16 +16,7 @@ export default createStore({
         sampleTag: {}
     },
     mutations: {
-        // addShakeData(state, payload) {
-        //     for (let i = 0; i < payload.length; i++) {
-        //         if (payload[i] < 4096 && payload[i] > 0) {
-        //             state.shakeData.push(payload[i]);
-        //         }
-        //     }
-        //     if (state.shakeData.length > 5000) {
-        //         state.shakeData.splice(0, 20);
-        //     }
-        // },
+        // 获取傅立叶变换数据
         addFftData(state, payload) {
             let data = [];
             for (let i = 1; i < payload.length; i++) {
@@ -33,14 +24,17 @@ export default createStore({
             }
             state.ssSeimicFft = data;
         },
+        // 获取用户id
         getUserID(state, payload) {
             state.userID = payload;
         },
+        // 获取样本列表
         getSampleList(state, payload) {
-            for (let i = 0; i < payload.entityTypeList.length; i++) {
-                payload.entityTypeList[i].time = getTime(payload.entityTypeList[i].time * 1000)
+            console.log(payload);
+            for (let i = 0; i < payload.sampleListList.length; i++) {
+                payload.sampleListList[i].time = getTime(payload.sampleListList[i].time * 1000)
             }
-            state.sampleList = payload.entityTypeList;
+            state.sampleList = payload.sampleListList;
         },
         // 解析样本数据
         resolveSample(state, payload) {

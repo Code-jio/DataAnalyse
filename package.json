@@ -48,6 +48,7 @@
   "dependencies": {
     "echarts": "^5.4.0",
     "element-plus": "^2.2.20",
+    "mitt": "^3.0.0",
     "vue": "^3.2.44",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"

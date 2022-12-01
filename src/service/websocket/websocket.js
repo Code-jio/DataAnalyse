@@ -128,12 +128,12 @@ let SocketManager = (function () {
 
           store.commit('addFftData', ssSeimicFft.sampleValueList);
           break;
-        case MessageType.ALGO_CLASSIFY_RST:
-          let AlgoClassifyRst = proto.algo_classify_rst
+        case MessageType.SP_CLASIFY_INFO:
+          let spClasifyInfo = proto.sp_clasify_info
             .deserializeBinary(content)
             .toObject();
-          console.log(AlgoClassifyRst, mainPacket);
-          store.commit('getTag', AlgoClassifyRst);
+          console.log(spClasifyInfo, mainPacket);
+          store.commit('getTag', spClasifyInfo);
           break;
         // // 地磁原始数据
         // case MessageType.SS_MAGNETIC_RAWSIG:
