@@ -1,4 +1,3 @@
-<!-- eslint-disable no-undef -->
 <template>
   <el-select
     v-model="value"
@@ -18,17 +17,17 @@
 
 <script setup>
 import { ref } from "vue";
-import "@/service/proto/proto_main.js";
 // import { reqAlgo } from "@/service/websoket/send.js";
 import emitter from "@/utils/eventBus.js";
 const value = ref();
-console.log(proto);
 const options = [
   {
+    // eslint-disable-next-line no-undef
     value: proto.EntityType.ALGO_SVM,
     label: "支持向量机",
   },
   {
+    // eslint-disable-next-line no-undef
     value: proto.EntityType.ALGO_VISION,
     label: "图像识别",
   },

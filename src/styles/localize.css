@@ -4,3 +4,9 @@
 .el-card {
   overflow: auto;
 }
+
+.del-button {
+  position: relative;
+  right: -132px;
+  top: -117px;
+}

@@ -10,7 +10,7 @@
           </el-descriptions-item>
           <el-descriptions-item label="目标类型:">Suzhou</el-descriptions-item>
           <el-descriptions-item label="标签:">
-            <el-radio-group v-model="labels" @change="chooseLabel" size="small">
+            <el-radio-group v-model="label" @change="chooseLabel" size="small">
               <el-radio-button label="人员" />
               <el-radio-button label="车辆" />
               <el-radio-button label="未分类" />
@@ -36,8 +36,10 @@ const horizontalScroll = (e) => {
   scrollBar.value.scrollLeft += e.deltaY;
 };
 
-const labels = ref("");
-const chooseLabel = () => {};
+const label = ref("");
+const chooseLabel = (e) => {
+  console.log(e);
+};
 </script>
 
 <style scoped lang="sass">

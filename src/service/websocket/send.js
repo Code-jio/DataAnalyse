@@ -1,5 +1,4 @@
 /* eslint-disable */
-import '@/service/proto/proto_main.js';
 import socketMgr from '@/service/websocket/websocket';
 import store from '@/store'; //在js文件引入store模块
 

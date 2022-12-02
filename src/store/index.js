@@ -4,7 +4,6 @@ import { getTime } from "@/utils/utils.js"
 import {
     decodeBuffer, getArr
 } from "@/utils/dataTransform.js"
-import "@/service/proto/proto_main.js"
 export default createStore({
     state: {
         shakeData: [],

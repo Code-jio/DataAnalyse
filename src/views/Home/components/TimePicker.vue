@@ -27,7 +27,6 @@
 </template>
 
 <script setup>
-import "@/service/proto/proto_main.js";
 import { ref } from "vue";
 import { reqSampleList } from "@/service/websocket/send.js";
 const startTime = ref("");

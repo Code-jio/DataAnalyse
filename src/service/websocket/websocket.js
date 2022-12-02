@@ -1,7 +1,6 @@
 /* eslint-disable */
 import store from '@/store';
 import { ElMessage } from 'element-plus';
-import '@/service/proto/proto_main.js';
 import { sendSubscribeTable } from "./send.js"
 import subscribeTable from '../../utils/subscribeTable.js';
 function sendLoginMsg(msg) {
