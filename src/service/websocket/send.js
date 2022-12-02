@@ -139,6 +139,22 @@ export function reqSampleClassifyRes(sampleID) {
   console.log('请求样本分类结果', R2S);
 }
 
+export function reqAlgo(sampleID, AlgoType) {
+  let R2S = new proto.rqt_2pf_std();
+  R2S.setRqtCode(11);
+  R2S.setParams(`${sampleID},${AlgoType},${store.state.userID}`);
+  // 消息主体打包
+  let mainPack = new proto.main_packet();
+  mainPack.setContent(R2S.serializeBinary());
+  mainPack.setCheck('0');
+  mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
+  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
+  mainPack.setTime(new Date().getTime());
+  socketMgr.send(mainPack.serializeBinary());
+  console.log('请求样本分类结果', R2S);
+}
+
 /**
  * 发送快速抓拍指令
  * @param { Number } sensorId

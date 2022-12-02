@@ -73,7 +73,7 @@ const sampleInfo = ref({});
 emitter.on("sendRow", (info) => {
   sampleInfo.value = info;
 });
-// 删除样本
+// 删除样本s
 const deleteSample = (e) => {
   console.log(e);
   reqDeleteSample(e.id);
