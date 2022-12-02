@@ -1,4 +1,5 @@
 import "./service/websocket/websocket"
+import "@/service/proto/proto_main.js"
 
 import { createApp } from "vue";
 import App from "./App";

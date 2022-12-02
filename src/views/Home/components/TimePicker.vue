@@ -20,7 +20,9 @@
       value-format="x"
     />
     <br />
-    <el-button class="btn" @click="timeCommit()" type="primary">提交</el-button>
+    <el-button class="btn" @click="timeCommit()" color="#626aef"
+      >提交</el-button
+    >
   </div>
 </template>
 

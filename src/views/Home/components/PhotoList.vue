@@ -2,7 +2,23 @@
   <div class="photoList" ref="scrollBar" @mousewheel="horizontalScroll">
     <div class="photo" v-for="i in 20" :key="i">
       <img class="image" src="@/assets/images/23.jpg" alt="" srcset="" />
-      <span>{{ data }}</span>
+      <div class="imageInfo">
+        <el-descriptions title="图片信息:" :column="1" direction="horizontal">
+          <el-descriptions-item label="图片ID:"> {{}} </el-descriptions-item>
+          <el-descriptions-item label="获取时间:">
+            18100000000
+          </el-descriptions-item>
+          <el-descriptions-item label="目标类型:">Suzhou</el-descriptions-item>
+          <el-descriptions-item label="标签:">
+            <el-radio-group v-model="labels" @change="chooseLabel" size="small">
+              <el-radio-button label="人员" />
+              <el-radio-button label="车辆" />
+              <el-radio-button label="未分类" />
+              <el-radio-button label="其他" />
+            </el-radio-group>
+          </el-descriptions-item>
+        </el-descriptions>
+      </div>
     </div>
   </div>
 </template>
@@ -12,12 +28,16 @@ import { useStore } from "vuex";
 import { computed, ref } from "vue";
 
 const store = useStore();
+// eslint-disable-next-line no-unused-vars
 const data = computed(() => store.state.photoList);
 
 const scrollBar = ref(null);
 const horizontalScroll = (e) => {
   scrollBar.value.scrollLeft += e.deltaY;
 };
+
+const labels = ref("");
+const chooseLabel = () => {};
 </script>
 
 <style scoped lang="sass">
@@ -43,10 +63,16 @@ const horizontalScroll = (e) => {
     }
   .photo {
     width: 100%;
-    margin: auto 10px;
+    height: 210px;
+    margin: 10px 15px 14px;
+    display: flex;
     img {
         background-color: pink;
-        width: 200px;
+        // width: 200px;
+    }
+    .imageInfo{
+      margin-left:10px;
+      width: 210px;
     }
     span {
         font-size: 16px;

@@ -32,7 +32,7 @@ export default createStore({
         // 获取样本列表
         getSampleList(state, payload) {
             for (let i = 0; i < payload.sampleListList.length; i++) {
-                payload.sampleListList[i].time = getTime(payload.sampleListList[i].time * 1000)
+                payload.sampleListList[i].date = getTime(payload.sampleListList[i].time * 1000)
             }
             state.sampleList = payload.sampleListList;
         },

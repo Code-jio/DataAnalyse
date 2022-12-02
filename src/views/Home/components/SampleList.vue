@@ -7,8 +7,8 @@
       @row-click="getRowSignal"
       class="table"
     >
-      <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="time" label="时间"></el-table-column>
+      <el-table-column prop="id" label="ID" width="100"></el-table-column>
+      <el-table-column prop="date" label="时间"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -21,6 +21,7 @@ import {
   reqSampleData,
   reqFftData,
   reqSampleClassifyRes,
+  getPhotoList,
 } from "@/service/websocket/send.js";
 
 const store = useStore();
@@ -31,6 +32,7 @@ const getRowSignal = (e) => {
   reqSampleData(e.id);
   reqFftData(e.id);
   reqSampleClassifyRes(e.id);
+  getPhotoList(e.id, e.time - 60, e.time + 60);
   emitter.emit("sendRow", e);
 };
 </script>
@@ -39,7 +41,5 @@ const getRowSignal = (e) => {
 .sampleList {
   margin:0 auto;
   width: 98%;
-  // height:%;
-  // background-color: lightblue;
 }
 </style>

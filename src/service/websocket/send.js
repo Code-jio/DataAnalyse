@@ -138,11 +138,16 @@ export function reqSampleClassifyRes(sampleID) {
   socketMgr.send(mainPack.serializeBinary());
   console.log('请求样本分类结果', R2S);
 }
-
-export function reqAlgo(sampleID, AlgoType) {
+/**
+ * 发送算法识别指令
+ * @param { Number } sampleID 样本ID
+ * @param { Number } AlgoType 算法类型
+ * @param { Number } targetID 目标ID 其实就是用户ID
+ */
+export function reqAlgo(sampleID, AlgoType, targetID = store.state.userID) {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(11);
-  R2S.setParams(`${sampleID},${AlgoType},${store.state.userID}`);
+  R2S.setParams(`${sampleID},${AlgoType},${targetID}`);
   // 消息主体打包
   let mainPack = new proto.main_packet();
   mainPack.setContent(R2S.serializeBinary());
@@ -154,10 +159,32 @@ export function reqAlgo(sampleID, AlgoType) {
   socketMgr.send(mainPack.serializeBinary());
   console.log('请求样本分类结果', R2S);
 }
+/**
+ * 发送人工标签
+ * @param {*} sampleID 样本ID
+ * @param {*} targetType 目标类型
+ * @param {*} confidenceLevel 置信度 人工标签置信度默认为100
+ */
+export function sendTags(sampleID, targetType, confidenceLevel = 100) {
+  let AlgoClassifyRst = new proto.algo_classify_rst();
+  AlgoClassifyRst.setSampleId(sampleID);
+  AlgoClassifyRst.setTargetType(targetType);
+  AlgoClassifyRst.setConfidenceLevel(confidenceLevel);
+  // 消息主体打包
+  let mainPack = new proto.main_packet();
+  mainPack.setContent(AlgoClassifyRst.serializeBinary());
+  mainPack.setCheck('0');
+  mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
+  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
+  mainPack.setTime(new Date().getTime());
+  socketMgr.send(mainPack.serializeBinary());
+  console.log('发送标签', AlgoClassifyRst);
+}
 
 /**
  * 发送快速抓拍指令
- * @param { Number } sensorId
+ * @param { Number } sensorId 
  * @param { Number } userID
  * @param { Uint8Array } token
  * @returns

@@ -3,7 +3,7 @@
     <el-card class="Card">
       <span>样本ID: {{ sampleInfo.id }}</span>
       <br />
-      <span>样本获取时间: {{ sampleInfo.time }}</span>
+      <span>样本获取时间: {{ sampleInfo.date }}</span>
       <br />
       <span
         >目标类型:
@@ -61,8 +61,12 @@
 
 <script setup>
 import { Delete } from "@element-plus/icons-vue";
-// import { getTargetType } from "@/service/websocket";
-import { reqDeleteSample } from "@/service/websocket/send.js";
+// import { getTargetType } from "@/service/websocket/send.js";
+import {
+  reqDeleteSample,
+  sendTags,
+  getTargetType,
+} from "@/service/websocket/send.js";
 import emitter from "@/utils/eventBus.js";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
@@ -73,7 +77,7 @@ const sampleInfo = ref({});
 emitter.on("sendRow", (info) => {
   sampleInfo.value = info;
 });
-// 删除样本s
+// 删除样本
 const deleteSample = (e) => {
   console.log(e);
   reqDeleteSample(e.id);
@@ -83,7 +87,28 @@ const deleteSample = (e) => {
 const labels = ref("");
 // 选取标签
 const chooseLabel = (e) => {
-  console.log(e);
+  // sendTags(sendTags, e);
+  console.log(labels, e);
+  switch (e) {
+    case "人员":
+      sendTags(sampleInfo.value.id, proto.TargetType.TT_HUMAN);
+      // console.log(sampleInfo.value.id, proto.TargetType.TT_HUMAN);
+      break;
+    case "车辆":
+      sendTags(sampleInfo.value.id, proto.TargetType.TT_VEHICLE);
+      // console.log(sampleInfo.value.id, proto.TargetType.TT_VEHICLE);
+      break;
+    case "未分类":
+      sendTags(sampleInfo.value.id, proto.TargetType.TT_UNCLASSIFIED);
+      // console.log(sampleInfo.value.id, proto.TargetType.TT_UNCLASSIFIED);
+      break;
+    case "其他":
+      sendTags(sampleInfo.value.id, proto.TargetType.TT_OTHER);
+      // console.log(sampleInfo.value.id, proto.TargetType.TT_OTHER);
+      break;
+    default:
+      return;
+  }
 };
 </script>
 
