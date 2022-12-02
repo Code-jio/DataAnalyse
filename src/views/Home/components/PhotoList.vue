@@ -51,7 +51,6 @@ const chooseLabel = (e) => {
   &::-webkit-scrollbar {
       width: 10px;
       height: 10px;
-      // background: #fff;
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 5px;
@@ -65,7 +64,7 @@ const chooseLabel = (e) => {
     }
   .photo {
     width: 100%;
-    height: 210px;
+    height: 150px;
     margin: 10px 15px 14px;
     display: flex;
     img {

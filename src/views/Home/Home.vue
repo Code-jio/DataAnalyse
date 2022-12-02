@@ -4,25 +4,35 @@
     <el-container>
       <!-- 侧栏 样本列表 -->
       <el-aside width="380px">
-        <el-card class="box-card Card">
-          <TimePicker></TimePicker>
-        </el-card>
+        <!-- 时间选择 -->
+
+        <!-- 样本列表 -->
         <el-card class="box-card Card">
           <SampleList></SampleList>
         </el-card>
+        <!-- 算法选择 -->
         <el-card class="box-card Card">
           <AlgorithmPicker></AlgorithmPicker>
         </el-card>
+        <!-- 标签展示 -->
         <ShowTags></ShowTags>
       </el-aside>
       <el-container>
-        <!-- 统计图 主体部分 -->
-        <el-main>
+        <!-- 头部 -->
+        <el-header>
+          <el-card>
+            <TimePicker></TimePicker>
+          </el-card>
+        </el-header>
+        <!-- 主体部分 -->
+        <el-main
+          ><!-- 图片列表 -->
+          <PhotoList></PhotoList>
+          <!-- 统计图 -->
           <el-card>
             <LineChart></LineChart>
             <BarChart></BarChart>
           </el-card>
-          <PhotoList></PhotoList>
         </el-main>
       </el-container>
     </el-container>

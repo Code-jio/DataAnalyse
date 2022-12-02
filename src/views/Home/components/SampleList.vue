@@ -2,7 +2,7 @@
   <div class="sampleList">
     <el-table
       :data="sampleList"
-      height="330"
+      height="400"
       style="width: 100%"
       @row-click="getRowSignal"
       class="table"

@@ -1,12 +1,18 @@
 .Card {
-  margin: 4% auto;
+  margin: 0 auto 10px;
 }
 .el-card {
   overflow: auto;
+  --el-card-padding: 16px;
 }
 
 .del-button {
   position: relative;
   right: -132px;
   top: -117px;
+}
+.el-descriptions__body
+  .el-descriptions__table:not(.is-bordered)
+  .el-descriptions__cell {
+  padding-bottom: 0;
 }

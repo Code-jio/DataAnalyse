@@ -1,25 +1,15 @@
 <template>
   <div class="block flex">
-    <!-- 开始时间 -->
-
-    <span class="demonstration">开始时间: </span>
     <el-date-picker
-      v-model="startTime"
-      type="datetime"
-      placeholder="Select date and time"
+      v-model="time"
+      type="datetimerange"
+      :shortcuts="shortcuts"
+      range-separator="To"
+      start-placeholder="Start date"
+      end-placeholder="End date"
       format="YYYY/MM/DD hh:mm:ss"
       value-format="x"
     />
-    <br />
-    <span class="demonstration">结束时间: </span>
-    <el-date-picker
-      v-model="endTime"
-      type="datetime"
-      placeholder="Select date and time"
-      format="YYYY/MM/DD hh:mm:ss"
-      value-format="x"
-    />
-    <br />
     <el-button class="btn" @click="timeCommit()" color="#626aef"
       >提交</el-button
     >
@@ -27,18 +17,58 @@
 </template>
 
 <script setup>
+import "@/service/proto/proto_main.js";
 import { ref } from "vue";
 import { reqSampleList } from "@/service/websocket/send.js";
-const startTime = ref("");
-const endTime = ref("");
+const time = ref("");
+
+const shortcuts = [
+  {
+    text: "Last an hour",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setTime(start.getTime() - 3600 * 1000 * 1);
+      return [start, end];
+    },
+  },
+  {
+    text: "Last 3 hours",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setTime(start.getTime() - 3600 * 1000 * 3);
+      return [start, end];
+    },
+  },
+  {
+    text: "Last day",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setTime(start.getTime() - 3600 * 1000 * 24);
+      return [start, end];
+    },
+  },
+  {
+    text: "Last week",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+      return [start, end];
+    },
+  },
+];
 
 const timeCommit = () => {
-  console.log(startTime.value, endTime.value);
-  // getSampleList(0, 0);
-  if (startTime.value && endTime.value) {
-    reqSampleList(startTime.value / 1000, endTime.value / 1000);
+  if (time.value) {
+    reqSampleList(
+      parseInt(time.value[0] / 1000),
+      parseInt(time.value[1] / 1000)
+    );
   } else {
-    console.log("未输入参数");
+    console.log("未输入正确参数");
   }
 };
 </script>
@@ -47,10 +77,12 @@ const timeCommit = () => {
 
 .block{
   width: 80%;
-  // height: 100%;
   margin-left: 1%;
   .btn {
-    margin: 0 auto;
+    // margin: 0 auto;
+    position: relative;
+left: 30px;
+  top: -2px;
   }
 }
 </style>
