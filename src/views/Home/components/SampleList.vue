@@ -5,12 +5,12 @@
       height="400"
       style="width: 100%"
       @row-click="getRowSignal"
+      class="table"
     >
       <el-table-column prop="id" label="ID"></el-table-column>
       <el-table-column prop="time" label="时间"></el-table-column>
     </el-table>
   </div>
-  <el-divider />
 </template>
 
 <script setup>

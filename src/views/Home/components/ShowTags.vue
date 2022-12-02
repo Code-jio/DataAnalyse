@@ -1,52 +1,52 @@
 <template>
   <div class="tagArea">
-    <span>样本ID: {{ sampleInfo.id }}</span>
-    <br />
-    <span>样本获取时间: {{ sampleInfo.time }}</span>
-    <br />
-    <span
-      >目标类型:
-      {{
-        sampleClassifyInfo.targetType
-          ? sampleClassifyInfo.targetType
-          : "尚无数据"
-      }}</span
-    >
-    <br />
-    <span
-      >置信度:
-      {{
-        sampleClassifyInfo.confidenceLevel
-          ? sampleClassifyInfo.confidenceLevel
-          : "0"
-      }}</span
-    >
-    <br />
-    <span
-      >实体ID:
-      {{
-        sampleClassifyInfo.entityId ? sampleClassifyInfo.entityId : "尚无数据"
-      }}</span
-    >
-    <br />
-    <span
-      >实体类型:
-      {{
-        sampleClassifyInfo.entityType
-          ? sampleClassifyInfo.entityType
-          : "尚无数据"
-      }}</span
-    >
-    <el-divider direction="vertical" />
-
-    <el-button
-      type="danger"
-      :icon="Delete"
-      plain
-      @click="deleteSample(sampleInfo)"
-      >删除</el-button
-    >
-    <el-divider />
+    <el-card class="Card">
+      <span>样本ID: {{ sampleInfo.id }}</span>
+      <br />
+      <span>样本获取时间: {{ sampleInfo.time }}</span>
+      <br />
+      <span
+        >目标类型:
+        {{
+          sampleClassifyInfo.targetType
+            ? sampleClassifyInfo.targetType
+            : "尚无数据"
+        }}</span
+      >
+      <br />
+      <span
+        >置信度:
+        {{
+          sampleClassifyInfo.confidenceLevel
+            ? sampleClassifyInfo.confidenceLevel
+            : "0"
+        }}</span
+      >
+      <br />
+      <span
+        >实体ID:
+        {{
+          sampleClassifyInfo.entityId ? sampleClassifyInfo.entityId : "尚无数据"
+        }}</span
+      >
+      <br />
+      <span
+        >实体类型:
+        {{
+          sampleClassifyInfo.entityType
+            ? sampleClassifyInfo.entityType
+            : "尚无数据"
+        }}</span
+      >
+      <el-divider direction="vertical" />
+      <el-button
+        type="danger"
+        :icon="Delete"
+        plain
+        @click="deleteSample(sampleInfo)"
+        >删除</el-button
+      >
+    </el-card>
     <!-- 标签区域 -->
     <div class="labelArea">
       <el-radio-group v-model="labels" @change="chooseLabel">

@@ -68,7 +68,6 @@ let SocketManager = (function () {
       // console.log(MessageType);
     };
     this.onMessage = function ({ data }) {
-      console.log(data);
       if (!(data instanceof ArrayBuffer)) return;
       // let mainPacket = main_packet.decode(util.decodeBuffer(data));
       // new 主包解析
@@ -77,7 +76,7 @@ let SocketManager = (function () {
       // 主包转化为解析度较高的对象形式
       let mainPacket = proto.main_packet.deserializeBinary(evt).toObject();
       // if (mainPacket.destEntityId === 0) {
-      //   console.log(mainPacket);
+      console.log(mainPacket);
       //   return
       // }
       // 获取主包中的内容（Arraybuffer格式）

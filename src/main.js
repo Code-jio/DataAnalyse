@@ -1,10 +1,12 @@
+import "./service/websocket/websocket"
 
 import { createApp } from "vue";
 import App from "./App";
 
 import ElementPlus from "element-plus"
 import "element-plus/dist/index.css"
-import "./service/websocket/websocket"
+import "@/styles/localize.css"
+
 
 import store from "./store";
 import router from "./router"

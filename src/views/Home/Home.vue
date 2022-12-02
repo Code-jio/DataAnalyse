@@ -4,15 +4,21 @@
     <el-container>
       <!-- 侧栏 样本列表 -->
       <el-aside width="380px">
-        <TimePicker></TimePicker>
-        <SampleList></SampleList>
+        <el-card class="box-card Card">
+          <TimePicker></TimePicker>
+        </el-card>
+        <el-card class="box-card Card">
+          <SampleList></SampleList>
+        </el-card>
         <ShowTags></ShowTags>
       </el-aside>
       <el-container>
         <!-- 统计图 主体部分 -->
         <el-main>
-          <LineChart></LineChart>
-          <BarChart></BarChart>
+          <el-card>
+            <LineChart></LineChart>
+            <BarChart></BarChart>
+          </el-card>
           <PhotoList></PhotoList>
         </el-main>
       </el-container>
@@ -27,4 +33,8 @@ import SampleList from "./components/SampleList.vue";
 import PhotoList from "./components/PhotoList.vue";
 import ShowTags from "./components/ShowTags.vue";
 </script>
-<style lang="sass" scoped></style>
+<style lang="sass" scoped>
+// .box-card {
+//   background-color: rgb(204,204,214)
+// }
+</style>

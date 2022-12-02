@@ -24,7 +24,7 @@ export function takeHDPhoto(sensorId, userID, token) {
   // mainPack.setAccessPointId(123); //接入点
   mainPack.setDestEntityId(sensorId); // 目标实体id
   mainPack.setMessageType(proto.MessageType.CMD_2SENSOR_STD);
-  mainPack.setOriginEntityId(userID); // 发送方原始实体id
+  mainPack.setOriginEntityId(store.state.userID); // 发送方原始实体id
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   mainPack.setToken(token);
@@ -183,7 +183,7 @@ export function login(msg) {
   mainPack.setContent(loginMsg.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.PC_LOGON_REQUEST);
-  mainPack.setOriginEntityId(msg.id); // 登陆设备id
+  mainPack.setOriginEntityId(); // 登陆设备id
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -205,7 +205,7 @@ export function sendSubscribeTable(msg) {
   mainPack.setContent(pcEntityRegister.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.PC_ENTITY_REGISTER);
-  mainPack.setOriginEntityId(msg.id); // 登陆设备id
+  mainPack.setOriginEntityId(store.state.userID); // 登陆设备id
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
