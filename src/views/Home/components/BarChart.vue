@@ -90,7 +90,7 @@ onMounted(() => {
 <style lang="sass" scoped>
 .barChart{
   width: 98%;
-  height: 300px;
+  height: 280px;
   margin: 0 auto;
   border: 1px solid #000;
   background-color: rgb(15,12,40);

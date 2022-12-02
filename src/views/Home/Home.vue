@@ -10,6 +10,9 @@
         <el-card class="box-card Card">
           <SampleList></SampleList>
         </el-card>
+        <el-card class="box-card Card">
+          <AlgorithmPicker></AlgorithmPicker>
+        </el-card>
         <ShowTags></ShowTags>
       </el-aside>
       <el-container>
@@ -32,6 +35,7 @@ import TimePicker from "./components/TimePicker.vue";
 import SampleList from "./components/SampleList.vue";
 import PhotoList from "./components/PhotoList.vue";
 import ShowTags from "./components/ShowTags.vue";
+import AlgorithmPicker from "./components/AlgorithmPicker.vue";
 </script>
 <style lang="sass" scoped>
 // .box-card {

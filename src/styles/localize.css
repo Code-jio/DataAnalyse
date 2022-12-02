@@ -1,3 +1,9 @@
 .Card {
   margin: 4% auto;
 }
+/* .el-scrollbar__wrap {
+  height: auto;
+} */
+.el-scrollbar {
+  height: auto;
+}

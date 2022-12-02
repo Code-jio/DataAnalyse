@@ -87,8 +87,8 @@ onMounted(() => {
 <style lang="sass" scoped>
 .chart{
   width: 98%;
-  height: 300px;
-  margin: 30px auto;
+  height: 280px;
+  margin: 0 auto 10px;
   border: 1px solid #000;
   background-color:  rgb(15,12,40);
 }

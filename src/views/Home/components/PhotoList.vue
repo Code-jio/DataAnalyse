@@ -1,40 +1,57 @@
 <template>
-  <div class="photoList">
-    图片列表
-    <div class="photo" v-for="(i, item) in data" :key="i">
-      <!-- <img :src="item.sampleValue" alt="" srcset="" /> -->
-      ???
-      <span>{{ item.sampleId }}</span>
-      <span>{{ item.time }}</span>
+  <div class="photoList" ref="scrollBar" @mousewheel="horizontalScroll">
+    <div class="photo" v-for="i in 20" :key="i">
+      <img class="image" src="@/assets/images/23.jpg" alt="" srcset="" />
+      <span>{{ data }}</span>
     </div>
-    {{ data }}
   </div>
 </template>
 
 <script setup>
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, ref } from "vue";
+
 const store = useStore();
-const data = computed(() => store.state.data);
+const data = computed(() => store.state.photoList);
+
+const scrollBar = ref(null);
+const horizontalScroll = (e) => {
+  scrollBar.value.scrollLeft += e.deltaY;
+};
 </script>
 
 <style scoped lang="sass">
 .photoList {
-    width: 98%;
-    // height: 200px;
-    margin: 1% auto;
-    border: 1px soli #000;
-    // background-color: #ffe4c4;
-    .photo {
-      height: 100%
-      img {
-          background-color: pink;
-      }
-      span {
-          font-size: 16px;
-          background-color: blue;
-          color: #fff;
-      }
+  width: 98%;
+  margin: 10px auto;
+  display: flex;
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+      // background: #fff;
     }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      background: rgba(100, 100, 100, 0.5);
+    }
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.1);
+    }
+  .photo {
+    width: 100%;
+    margin: auto 10px;
+    img {
+        background-color: pink;
+        width: 200px;
+    }
+    span {
+        font-size: 16px;
+        color: #000;
+    }
+  }
 }
 </style>
