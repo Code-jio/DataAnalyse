@@ -74,6 +74,7 @@ const chooseLabel = (e) => {
     .imageInfo{
       margin-left:10px;
       width: 210px;
+      // background-color: rgb(254, 250, 230);
     }
     span {
         font-size: 16px;

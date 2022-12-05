@@ -67,7 +67,7 @@ let option = {
   },
 };
 onMounted(() => {
-  let LineChart = echarts.init(chart.value, "dark");
+  let LineChart = echarts.init(chart.value);
 
   setInterval(() => {
     option &&
@@ -89,7 +89,7 @@ onMounted(() => {
   width: 98%;
   height: 280px;
   margin: 0 auto 10px;
-  border: 1px solid #000;
-  background-color:  rgb(15,12,40);
+  // border: 1px solid #000;
+  // background-color:  rgb(15,12,40);
 }
 </style>

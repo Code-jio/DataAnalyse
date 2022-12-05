@@ -1,3 +1,7 @@
+/* body {
+  background-color: rgb(254, 250, 230);
+} */
+
 .Card {
   margin: 0 auto 10px;
 }
@@ -11,8 +15,13 @@
   right: -132px;
   top: -117px;
 }
+
 .el-descriptions__body
   .el-descriptions__table:not(.is-bordered)
   .el-descriptions__cell {
   padding-bottom: 0;
+}
+
+.el-descriptions__header {
+  margin-bottom: 4px;
 }

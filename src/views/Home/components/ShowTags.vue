@@ -46,6 +46,7 @@
         :icon="Delete"
         plain
         class="del-button"
+        :disabled="!sampleInfo"
         @click="deleteSample(sampleInfo)"
         >删除</el-button
       >

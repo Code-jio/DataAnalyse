@@ -70,7 +70,7 @@ let option = {
   ],
 };
 onMounted(() => {
-  let BarChart = echarts.init(bar.value, "dark");
+  let BarChart = echarts.init(bar.value);
 
   setInterval(() => {
     option &&
@@ -92,7 +92,5 @@ onMounted(() => {
   width: 98%;
   height: 280px;
   margin: 0 auto;
-  border: 1px solid #000;
-  background-color: rgb(15,12,40);
 }
 </style>
