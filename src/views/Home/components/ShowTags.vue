@@ -12,7 +12,7 @@
         >目标类型:
         {{
           sampleClassifyInfo.targetType
-            ? sampleClassifyInfo.targetType
+            ? getTargetType(sampleClassifyInfo.targetType)
             : "尚无数据"
         }}</span
       >
@@ -37,7 +37,7 @@
         >实体类型:
         {{
           sampleClassifyInfo.entityType
-            ? sampleClassifyInfo.entityType
+            ? getEntityType(sampleClassifyInfo.entityType).name
             : "尚无数据"
         }}</span
       >
@@ -53,7 +53,10 @@
       <br />
       <!-- 标签区域 -->
       <div class="labelArea">
-        <el-radio-group v-model="labels" @change="chooseLabel">
+        <el-radio-group
+          v-model="sampleClassifyInfo.targetType"
+          @change="chooseLabel"
+        >
           <el-radio-button label="人员" :disabled="!sampleInfo" />
           <el-radio-button label="车辆" :disabled="!sampleInfo" />
           <el-radio-button label="未分类" :disabled="!sampleInfo" />
@@ -67,7 +70,12 @@
 <script setup>
 import { Delete } from "@element-plus/icons-vue";
 // import { getTargetType } from "@/service/websocket/send.js";
-import { reqDeleteSample, sendTags } from "@/service/websocket/send.js";
+import {
+  reqDeleteSample,
+  sendTags,
+  getTargetType,
+  getEntityType,
+} from "@/service/websocket/send.js";
 import emitter from "@/utils/eventBus.js";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
@@ -85,11 +93,12 @@ const deleteSample = (e) => {
 };
 
 // 标签
-const labels = ref("");
+// const labels = ref("");
 // 选取标签
 const chooseLabel = (e) => {
   // sendTags(sendTags, e);
-  console.log(sampleInfo.value, e, "发送标签");
+  // eslint-disable-next-line no-undef
+  console.log(sampleInfo.value, e, proto.TargetType, "发送标签");
   switch (e) {
     case "人员":
       // eslint-disable-next-line no-undef

@@ -21,18 +21,24 @@ import {
   reqSampleData,
   reqFftData,
   reqSampleClassifyRes,
-  getPhotoList,
+  reqRelatedSample,
 } from "@/service/websocket/send.js";
 
 const store = useStore();
 const sampleList = computed(() => store.state.sampleList);
 
-// 请求震动样本数据、傅立叶变换数据、样本分类结果
+// 请求震动样本数据、傅里叶变换数据、样本分类结果、相关样本
 const getRowSignal = (e) => {
+  console.log(e);
+  // 请求样本数据;
   reqSampleData(e.id);
+  // 请求傅里叶变换
   reqFftData(e.id);
+  // 请求样本分类结果
   reqSampleClassifyRes(e.id);
-  getPhotoList(e.id, e.time - 60, e.time + 60);
+  // 请求相关样本 （图片列表）
+  // eslint-disable-next-line no-undef
+  reqRelatedSample(e.id, proto.EntityType.SS_CAMERA);
   emitter.emit("sendRow", e);
 };
 </script>

@@ -12,15 +12,16 @@ const store = useStore();
 
 const categories = function () {
   let res = [];
-  for (let i = 0; i < 256; i++) {
+  for (let i = 0; i < 128; i++) {
     res.push(i);
   }
   return res;
 };
+
 let option = {
   backgroundColor: "",
   title: {
-    text: "傅立叶变换",
+    text: "傅里叶变换",
     left: "center",
   },
   tooltip: {

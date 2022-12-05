@@ -2,43 +2,11 @@
 import socketMgr from '@/service/websocket/websocket';
 import store from '@/store'; //在js文件引入store模块
 
-
-/**
- * 发送高清抓拍指令
- * @param { Number } sensorId
- * @param { Number } userID
- * @param { Uint8Array } token
- * @returns
- */
-export function takeHDPhoto(sensorId, userID, token) {
-  // 命令打包
-  let cmd = new proto.cmd_2sensor_std();
-  cmd.setCmdCode(proto.EntityType.SS_CAMERA * 16777216 + 2);
-  cmd.setParams('1');
-
-  // 消息主体打包
-  let mainPack = new proto.main_packet();
-  mainPack.setContent(cmd.serializeBinary());
-  mainPack.setCheck('0');
-  // mainPack.setAccessPointId(123); //接入点
-  mainPack.setDestEntityId(sensorId); // 目标实体id
-  mainPack.setMessageType(proto.MessageType.CMD_2SENSOR_STD);
-  mainPack.setOriginEntityId(store.state.userID); // 发送方原始实体id
-  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
-  mainPack.setTime(new Date().getTime());
-  mainPack.setToken(token);
-  socketMgr.send(mainPack.serializeBinary());
-
-  console.log('发送高清抓拍指令');
-
-  return mainPack.serializeBinary();
-}
-
 /**
  * 请求样本列表
- * @param {String} id 样本ID
- * @param {String} startTime 开始时间
- * @param {String} endTime 截止时间
+ * @param { Number } id 样本ID
+ * @param { String } startTime 开始时间
+ * @param { String } endTime 截止时间
  */
 export function reqSampleList(startTime, endTime, id = proto.EntityType.SS_SEISMIC) {
   let R2S = new proto.rqt_2pf_std();
@@ -54,8 +22,32 @@ export function reqSampleList(startTime, endTime, id = proto.EntityType.SS_SEISM
   mainPack.setTime(new Date().getTime());
   // console.log(mainPack);
   socketMgr.send(mainPack.serializeBinary());
-  console.log('请求样本列表');
+  // console.log('请求样本列表');
 }
+
+/**
+ * 请求样本的关联样本
+ * @param { Number } id 原样本id
+ * @param { Number } type 目标样本类型
+ * @param { Number } destEntityId 目标id（作为返回结果的destentityid）
+ */
+export function reqRelatedSample(id, type, destEntityId = store.state.userID) {
+  let R2S = new proto.rqt_2pf_std();
+  R2S.setRqtCode(12);
+  R2S.setParams(`${id},${type},${destEntityId}`);
+  // 消息主体打包
+  let mainPack = new proto.main_packet();
+  mainPack.setContent(R2S.serializeBinary());
+  mainPack.setCheck('0');
+  mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
+  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
+  mainPack.setTime(new Date().getTime());
+  // console.log(mainPack);
+  socketMgr.send(mainPack.serializeBinary());
+}
+
+
 /**
  * 请求样本数据
  * @param { Number } id 样本ID
@@ -74,18 +66,18 @@ export function reqSampleData(id) {
   mainPack.setTime(new Date().getTime());
   // console.log(mainPack);
   socketMgr.send(mainPack.serializeBinary());
-  console.log('请求震动样本数据');
+  // console.log('请求震动样本数据');
 }
 
 /**
- * 请求傅立叶变换数据
+ * 请求傅里叶变换数据
  * @param { Number } sampleID 样本ID
- * @param { Number } targetID 目标ID
+ * @param { Number } destEntityId 目标ID
  */
-export function reqFftData(sampleID, targetID = store.state.userID) {
+export function reqFftData(sampleID, destEntityId = store.state.userID) {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(8);
-  R2S.setParams(`${sampleID},${targetID}`);
+  R2S.setParams(`${sampleID},${destEntityId}`);
   // 消息主体打包
   let mainPack = new proto.main_packet();
   mainPack.setContent(R2S.serializeBinary());
@@ -95,7 +87,7 @@ export function reqFftData(sampleID, targetID = store.state.userID) {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  console.log('请求傅立叶变换数据');
+  // console.log('请求傅里叶变换数据');
 }
 
 /**
@@ -135,18 +127,18 @@ export function reqSampleClassifyRes(sampleID) {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  console.log('请求样本分类结果', R2S);
 }
+
 /**
  * 发送算法识别指令
  * @param { Number } sampleID 样本ID
  * @param { Number } AlgoType 算法类型
- * @param { Number } targetID 目标ID 其实就是用户ID
+ * @param { Number } destEntityId 目标ID 其实就是用户ID
  */
-export function reqAlgo(sampleID, AlgoType, targetID = store.state.userID) {
+export function reqAlgo(sampleID, AlgoType, destEntityId = store.state.userID) {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(11);
-  R2S.setParams(`${sampleID},${AlgoType},${targetID}`);
+  R2S.setParams(`${sampleID},${AlgoType},${destEntityId}`);
   // 消息主体打包
   let mainPack = new proto.main_packet();
   mainPack.setContent(R2S.serializeBinary());
@@ -158,11 +150,12 @@ export function reqAlgo(sampleID, AlgoType, targetID = store.state.userID) {
   socketMgr.send(mainPack.serializeBinary());
   console.log('请求样本分类结果', R2S);
 }
+
 /**
  * 发送人工标签
- * @param {*} sampleID 样本ID
- * @param {*} targetType 目标类型
- * @param {*} confidenceLevel 置信度 人工标签置信度默认为100
+ * @param { Number } sampleID 样本ID
+ * @param { Number } targetType 目标类型
+ * @param { Number } confidenceLevel 置信度 人工标签置信度默认为100
  */
 export function sendTags(sampleID, targetType, confidenceLevel = 100) {
   let AlgoClassifyRst = new proto.algo_classify_rst();
@@ -173,41 +166,12 @@ export function sendTags(sampleID, targetType, confidenceLevel = 100) {
   let mainPack = new proto.main_packet();
   mainPack.setContent(AlgoClassifyRst.serializeBinary());
   mainPack.setCheck('0');
-  mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
+  mainPack.setMessageType(proto.MessageType.ALGO_CLASSIFY_RST);
   mainPack.setOriginEntityId(store.state.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  console.log('发送标签', AlgoClassifyRst);
-}
-
-/**
- * 发送快速抓拍指令
- * @param { Number } sensorId 
- * @param { Number } userID
- * @param { Uint8Array } token
- * @returns
- */
-export function takePhotoFast(sensorId, userID, token) {
-  // 命令打包
-  let cmd = new proto.cmd_2sensor_std();
-  cmd.setCmdCode(proto.EntityType.SS_CAMERA * 16777216 + 1); // SS_CAMERA枚举值×2^24+1
-  cmd.setParams('1');
-
-  // 消息主体打包
-  let mainPack = new proto.main_packet();
-  mainPack.setContent(cmd.serializeBinary());
-  mainPack.setCheck('0');
-  // mainPack.setAccessPointId(123); //接入点
-  mainPack.setDestEntityId(sensorId); // 目标实体id
-  mainPack.setMessageType(proto.MessageType.CMD_2SENSOR_STD);
-  mainPack.setOriginEntityId(userID); // 发送方原始实体id
-  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
-  mainPack.setTime(new Date().getTime());
-  mainPack.setToken(token);
-  socketMgr.send(mainPack.serializeBinary());
-  console.log('发送快速抓拍指令', mainPack.serializeBinary());
-  return mainPack.serializeBinary();
+  // console.log('发送标签', AlgoClassifyRst);
 }
 
 /**
@@ -229,7 +193,7 @@ export function login(msg) {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  console.log('成功发送登录信息', mainPack.serializeBinary());
+  // console.log('成功发送登录信息', mainPack.serializeBinary());
   return mainPack.serializeBinary();
 }
 
@@ -255,7 +219,9 @@ export function sendSubscribeTable(msg) {
   return mainPack.serializeBinary();
 }
 
-// 请求传感器信息
+/**
+ * 请求样本列表
+ */
 export function getSensorList() {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(1);
@@ -270,31 +236,6 @@ export function getSensorList() {
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
   console.log('完成主页加载，发出传感器列表请求');
-}
-
-/**
- * 请求相关传感器的图片列表
- * @param {Number} sensorId
- * @param {Number} startTime
- * @param {Number} endTime
- */
-export function getPhotoList(sensorId, startTime, endTime) {
-  let R2S = new proto.rqt_2pf_std();
-  R2S.setRqtCode(5);
-  // R2S.setParams(`${sensorId},1663334589,1663373433`);
-  R2S.setParams(`${sensorId},${startTime},${endTime}`);
-
-  // 消息主体打包
-  let mainPack = new proto.main_packet();
-  mainPack.setContent(R2S.serializeBinary());
-  mainPack.setCheck('0');
-  mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
-  mainPack.setOriginEntityId(store.state.userID);
-  mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
-  mainPack.setTime(new Date().getTime());
-  socketMgr.send(mainPack.serializeBinary()) &&
-    console.log('发出传感器图片请求');
-
 }
 
 // 请求拓扑图数据
@@ -315,7 +256,7 @@ export function getTopoList() {
 
 /**
  * 请求实体类型
- * @param {Number} num
+ * @param { Number } num
  * @returns
  */
 export function getEntityType(num) {
@@ -387,7 +328,7 @@ export function getEntityType(num) {
 
 /**
  * 请求工作模式
- * @param {Number} num
+ * @param { Number } num
  * @returns
  */
 export function getWorkingMode(num) {
@@ -411,7 +352,7 @@ export function getWorkingMode(num) {
 
 /**
  * 请求目标类型
- * @param {Number} num
+ * @param { Number } num
  * @returns
  */
 export function getTargetType(num) {

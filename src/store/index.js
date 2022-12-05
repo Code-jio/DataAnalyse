@@ -16,7 +16,7 @@ export default createStore({
         sampleClassifyInfo: {}
     },
     mutations: {
-        // 获取傅立叶变换数据
+        // 获取傅里叶变换数据
         addFftData(state, payload) {
             let data = [];
             for (let i = 1; i < payload.length; i++) {
@@ -37,7 +37,7 @@ export default createStore({
         },
         // 解析样本数据
         resolveSample(state, payload) {
-            // console.log('接收到payload', payload);
+            console.log('接收到样本数据', payload);
             // 处理图片数据
             // 判断设备类型
             if (payload.mainPacket.originEntityType === proto.EntityType.SS_CAMERA) {
@@ -76,6 +76,8 @@ export default createStore({
                         'data:image/jpg;base64,' + payload.ssSignalSample.sampleValue;
                     state.photoList.push(payload.ssSignalSample);
                 }
+            } else {
+                console.log(payload);
             }
         },
         // 存储样本标签

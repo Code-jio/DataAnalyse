@@ -4970,7 +4970,7 @@
             msg.setEntityId(value);
             break;
           case 3:
-            var value = /** @type {number} */ (reader.readUint32());
+            var value = /** @type {!proto.EntityType} */ (reader.readEnum());
             msg.setEntityType(value);
             break;
           case 4:
@@ -5029,8 +5029,8 @@
         );
       }
       f = message.getEntityType();
-      if (f !== 0) {
-        writer.writeUint32(
+      if (f !== 0.0) {
+        writer.writeEnum(
           3,
           f
         );
@@ -5096,20 +5096,20 @@
 
 
     /**
-     * optional uint32 entity_type = 3;
-     * @return {number}
+     * optional EntityType entity_type = 3;
+     * @return {!proto.EntityType}
      */
     proto.sp_classify_info.prototype.getEntityType = function () {
-      return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+      return /** @type {!proto.EntityType} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
     };
 
 
     /**
-     * @param {number} value
+     * @param {!proto.EntityType} value
      * @return {!proto.sp_classify_info} returns this
      */
     proto.sp_classify_info.prototype.setEntityType = function (value) {
-      return jspb.Message.setProto3IntField(this, 3, value);
+      return jspb.Message.setProto3EnumField(this, 3, value);
     };
 
 
@@ -6150,7 +6150,6 @@
       SS_TEMPERATURE: 27,
       ALGO_SVM: 60,
       ALGO_VISION: 61,
-      SP_CLASSIFY_INFO: 70,
       FE_BROWSER: 100,
       SS_OT: 120,
       OT_TEST: 121
@@ -6173,6 +6172,7 @@
       CMD_2SENSOR_STD: 50,
       RQT_2PF_STD: 51,
       ALGO_CLASSIFY_RST: 60,
+      SP_CLASSIFY_INFO: 70,
       OT_TEST_MSG: 100,
       PC_ENTITY_REGISTER: 101,
       PC_SUBSCRIBE_UPDATE: 102,
@@ -6337,8 +6337,8 @@
                   var c = goog.Dependency.registerCallback_(function (b) { goog.DebugLoader_.IS_OLD_IE_ && "complete" != b.readyState || (goog.Dependency.unregisterCallback_(c), a.loaded()) }), d = !goog.DebugLoader_.IS_OLD_IE_ && goog.getScriptNonce() ?
                     ' nonce="' + goog.getScriptNonce() + '"' : ""; d = '<script src="' + this.path + '" ' + (goog.DebugLoader_.IS_OLD_IE_ ? "onreadystatechange" : "onload") + "=\"goog.Dependency.callback_('" + c + '\', this)" type="text/javascript" ' + (goog.Dependency.defer_ ? "defer" : "") + d + ">\x3c/script>"; b.write(goog.TRUSTED_TYPES_POLICY_ ? goog.TRUSTED_TYPES_POLICY_.createHTML(d) : d)
                 } else {
-                  var e = b.createElement("script"); e.defer = goog.Dependency.defer_; e.async = !1; e.type = "text/javascript"; (d = goog.getScriptNonce()) && e.setAttribute("nonce", d); goog.DebugLoader_.IS_OLD_IE_ ?
-                    (a.pause(), e.onreadystatechange = function () { if ("loaded" == e.readyState || "complete" == e.readyState) a.loaded(), a.resume() }) : e.onload = function () { e.onload = null; a.loaded() }; e.src = goog.TRUSTED_TYPES_POLICY_ ? goog.TRUSTED_TYPES_POLICY_.createScriptURL(this.path) : this.path; b.head.appendChild(e)
+                var e = b.createElement("script"); e.defer = goog.Dependency.defer_; e.async = !1; e.type = "text/javascript"; (d = goog.getScriptNonce()) && e.setAttribute("nonce", d); goog.DebugLoader_.IS_OLD_IE_ ?
+                  (a.pause(), e.onreadystatechange = function () { if ("loaded" == e.readyState || "complete" == e.readyState) a.loaded(), a.resume() }) : e.onload = function () { e.onload = null; a.loaded() }; e.src = goog.TRUSTED_TYPES_POLICY_ ? goog.TRUSTED_TYPES_POLICY_.createScriptURL(this.path) : this.path; b.head.appendChild(e)
               }
             } else goog.logToConsole_("Cannot use default debug loader outside of HTML documents."), "deps.js" == this.relativePath ? (goog.logToConsole_("Consider setting CLOSURE_IMPORT_SCRIPT before loading base.js, or setting CLOSURE_NO_DEPS to true."),
               a.loaded()) : a.pause()
@@ -6358,7 +6358,7 @@
           }, goog.TransformedDependency = function (a, b, c, d, e) { goog.Dependency.call(this, a, b, c, d, e); this.contents_ = null; this.lazyFetch_ = !goog.inHtmlDocument_() || !("noModule" in goog.global.document.createElement("script")) }, goog.inherits(goog.TransformedDependency, goog.Dependency), goog.TransformedDependency.prototype.load = function (a) {
             function b() {
               e.contents_ =
-              goog.loadFileSync_(e.path); e.contents_ && (e.contents_ = e.transform(e.contents_), e.contents_ && (e.contents_ += "\n//# sourceURL=" + e.path))
+                goog.loadFileSync_(e.path); e.contents_ && (e.contents_ = e.transform(e.contents_), e.contents_ && (e.contents_ += "\n//# sourceURL=" + e.path))
             } function c() {
               e.lazyFetch_ && b(); if (e.contents_) {
                 f && a.setModuleState(goog.ModuleType.ES6); try { var c = e.contents_; e.contents_ = null; goog.globalEval(c); if (f) var d = goog.moduleLoaderState_.moduleName } finally { f && a.clearModuleState() } f && goog.global.$jscomp.require.ensure([e.getPathName()], function () {
@@ -6684,7 +6684,7 @@
         jspb.utils.splitFloat64 = function (a) {
           var b = 0 > a ? 1 : 0; a = b ? -a : a; if (0 === a) jspb.utils.split64High = 0 < 1 / a ? 0 : 2147483648, jspb.utils.split64Low = 0; else if (isNaN(a)) jspb.utils.split64High = 2147483647, jspb.utils.split64Low = 4294967295; else if (a > jspb.BinaryConstants.FLOAT64_MAX) jspb.utils.split64High = (b << 31 | 2146435072) >>> 0, jspb.utils.split64Low = 0; else if (a < jspb.BinaryConstants.FLOAT64_MIN) { var c = a / Math.pow(2, -1074); a = c / jspb.BinaryConstants.TWO_TO_32; jspb.utils.split64High = (b << 31 | a) >>> 0; jspb.utils.split64Low = c >>> 0 } else {
             c =
-            a; var d = 0; if (2 <= c) for (; 2 <= c && 1023 > d;)d++, c /= 2; else for (; 1 > c && -1022 < d;)c *= 2, d--; c = a * Math.pow(2, -d); a = c * jspb.BinaryConstants.TWO_TO_20 & 1048575; c = c * jspb.BinaryConstants.TWO_TO_52 >>> 0; jspb.utils.split64High = (b << 31 | d + 1023 << 20 | a) >>> 0; jspb.utils.split64Low = c
+              a; var d = 0; if (2 <= c) for (; 2 <= c && 1023 > d;)d++, c /= 2; else for (; 1 > c && -1022 < d;)c *= 2, d--; c = a * Math.pow(2, -d); a = c * jspb.BinaryConstants.TWO_TO_20 & 1048575; c = c * jspb.BinaryConstants.TWO_TO_52 >>> 0; jspb.utils.split64High = (b << 31 | d + 1023 << 20 | a) >>> 0; jspb.utils.split64Low = c
           }
         };
         jspb.utils.splitHash64 = function (a) { var b = a.charCodeAt(0), c = a.charCodeAt(1), d = a.charCodeAt(2), e = a.charCodeAt(3), f = a.charCodeAt(4), g = a.charCodeAt(5), h = a.charCodeAt(6); a = a.charCodeAt(7); jspb.utils.split64Low = b + (c << 8) + (d << 16) + (e << 24) >>> 0; jspb.utils.split64High = f + (g << 8) + (h << 16) + (a << 24) >>> 0 }; jspb.utils.joinUint64 = function (a, b) { return b * jspb.BinaryConstants.TWO_TO_32 + (a >>> 0) };
