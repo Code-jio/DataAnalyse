@@ -11,7 +11,8 @@
             {{ getTime(item.time * 1000, "hh:mm:ss") }}
           </el-descriptions-item>
           <el-descriptions-item label="分类器:">
-            {{ item.time }}
+            {{ getEntityType(item.originEntityType).id }}
+            <!-- {{ item.originEntityType }} -->
           </el-descriptions-item>
           <el-descriptions-item label="分类结果:">
             {{ item.time }}
@@ -19,7 +20,7 @@
           <el-descriptions-item>
             <el-radio-group
               v-model="item.tag"
-              @change="chooseLabel"
+              @change="chooseLabel(item)"
               size="small"
             >
               <el-radio-button label="人员" />
@@ -38,6 +39,7 @@
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 import { getTime } from "@/utils/utils.js";
+import { getEntityType } from "@/service/websocket/send.js";
 const store = useStore();
 
 // eslint-disable-next-line no-unused-vars

@@ -45,3 +45,13 @@ export function debounce(fn, wait) {
 export function getRandom(max, min) {
     return Math.floor(Math.random() * (max - min) + min)
 }
+
+/**
+ * 通过对象值来寻找键(key)
+ * @param {Object} object 查找的值
+ * @param {*} value 需要寻找的键
+ * @returns 对象中查找到的key
+ */
+export function getObjectKey(object, value) {
+    return Object.keys(object).find(key => object[key] == value);
+}

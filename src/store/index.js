@@ -10,7 +10,6 @@ export default createStore({
         ssSeimicFft: [],
         userID: null,
         sampleList: [],
-        lastPhotoList: [],
         photoList: [],
         sampleTag: {},
         sampleClassifyInfo: {}

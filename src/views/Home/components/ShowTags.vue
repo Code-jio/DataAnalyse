@@ -34,10 +34,10 @@
       >
       <br />
       <span
-        >实体类型:
+        >算法类型:
         {{
           sampleClassifyInfo.entityType
-            ? getEntityType(sampleClassifyInfo.entityType).name
+            ? getEntityType(sampleClassifyInfo.entityType).id
             : "尚无数据"
         }}</span
       >

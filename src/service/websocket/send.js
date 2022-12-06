@@ -286,6 +286,12 @@ export function getEntityType(num) {
     case proto.EntityType.GW_LORABASE:
       Entity = { id: 'GW_LORABASE', name: 'LORA基站' }; // LORA基站
       break;
+    case proto.EntityType.GW_DTU:
+      Entity = { id: 'GW_DTU', name: 'DTU' };
+      break;
+    case proto.EntityType.GW_CAMERA:
+      Entity = { id: 'GW_CAMERA', name: 'GW_CAMERA' };
+      break;
     case proto.EntityType.SS_SEISMIC:
       Entity = { id: 'SS_SEISMIC', name: '震动传感器' }; // 震动传感器
       break;
@@ -307,6 +313,12 @@ export function getEntityType(num) {
     case proto.EntityType.SS_TEMPERATURE:
       Entity = { id: 'SS_TEMPERATURE', name: '温度传感器' }; // 温度传感器
       break;
+    case proto.EntityType.ALGO_SVM:
+      Entity = { id: 'ALGO_SVM', name: '支持向量机' }; // 算法
+      break;
+    case proto.EntityType.ALGO_VISION:
+      Entity = { id: 'ALGO_VISION', name: '图像识别' }; // 算法
+      break;
     case proto.EntityType.FE_BROWSER:
       Entity = { id: 'FE_BROWSER', name: '浏览器' }; // 浏览器（终端）
       break;
@@ -315,12 +327,6 @@ export function getEntityType(num) {
       break;
     case proto.EntityType.OT_TEST:
       Entity = { id: 'OT_TEST', name: '测试' }; // 其他的测试用
-      break;
-    case proto.EntityType.ALGO_SVM:
-      Entity = { id: 'ALGO_SVM', name: '支持向量机' }; // 算法
-      break;
-    case proto.EntityType.ALGO_VISION:
-      Entity = { id: 'ALGO_VISION', name: '图像识别' }; // 算法
       break;
   }
   return Entity;

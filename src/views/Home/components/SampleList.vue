@@ -1,6 +1,8 @@
 <template>
   <div class="sampleList">
     <el-table
+      highlight-current-row
+      :default-sort="{ prop: 'date', order: 'descending' }"
       :data="sampleList"
       height="575"
       style="width: 100%"
@@ -8,7 +10,7 @@
       class="table"
     >
       <el-table-column prop="id" label="ID" width="100"></el-table-column>
-      <el-table-column prop="date" label="时间"></el-table-column>
+      <el-table-column prop="date" label="时间" sortable></el-table-column>
     </el-table>
   </div>
 </template>
