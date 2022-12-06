@@ -47,7 +47,12 @@ export default createStore({
                 payload.ssSignalSample.sampleValue =
                     'data:image/jpg;base64,' + payload.ssSignalSample.sampleValue;
                 payload.ssSignalSample.tag = ""
-                state.photoList.push(payload.ssSignalSample);
+                // 数组去重
+                if (state.photoList.find(item => item.id === payload.ssSignalSample.id)) {
+                    return
+                } else {
+                    state.photoList.push(payload.ssSignalSample);
+                }
             }
         },
         // 存储样本标签

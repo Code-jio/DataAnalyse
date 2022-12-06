@@ -17,7 +17,11 @@
             {{ item.time }}
           </el-descriptions-item>
           <el-descriptions-item>
-            <el-radio-group v-model="label" @change="chooseLabel" size="small">
+            <el-radio-group
+              v-model="item.tag"
+              @change="chooseLabel"
+              size="small"
+            >
               <el-radio-button label="人员" />
               <el-radio-button label="车辆" />
               <el-radio-button label="未分类" />
@@ -43,7 +47,6 @@ const scrollBar = ref(null);
 const horizontalScroll = (e) => {
   scrollBar.value.scrollLeft += e.deltaY;
 };
-const label = ref("");
 const chooseLabel = (e) => {
   console.log(e);
 };
