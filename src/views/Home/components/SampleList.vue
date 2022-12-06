@@ -2,7 +2,7 @@
   <div class="sampleList">
     <el-table
       :data="sampleList"
-      height="563"
+      height="575"
       style="width: 100%"
       @row-click="getRowSignal"
       class="table"
@@ -27,7 +27,7 @@ import {
 const store = useStore();
 const sampleList = computed(() => store.state.sampleList);
 
-// 请求震动样本数据、傅里叶变换数据、样本分类结果、相关样本
+// 点击行数据 请求震动样本数据、傅里叶变换数据、样本分类结果、相关样本
 const getRowSignal = (e) => {
   console.log(e);
   // 请求样本数据;
@@ -36,7 +36,8 @@ const getRowSignal = (e) => {
   reqFftData(e.id);
   // 请求样本分类结果
   reqSampleClassifyRes(e.id);
-  // 请求相关样本 （图片列表）
+  // 请求相关样本 （图片列表）请求之前先将photoList置空
+  store.commit("resetPhotoList", []);
   // eslint-disable-next-line no-undef
   reqRelatedSample(e.id, proto.EntityType.SS_CAMERA);
   emitter.emit("sendRow", e);

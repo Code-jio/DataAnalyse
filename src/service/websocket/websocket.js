@@ -101,11 +101,14 @@ let SocketManager = (function () {
         // 图像传感器 拍摄图片
         case MessageType.SS_SIGNAL_SAMPLE:
           // proto_main.js 默认按照Base64格式解码 除图片外的其他类型数据建议按Base64反解码
+          // 如果源实体类型为震动传感器 则正常解析
           let ssSignalSample = proto.ss_signal_sample.deserializeBinary(content).toObject();
-          console.log(ssSignalSample);
-          let sampleValue = proto.ss_signal_sample.deserializeBinary(content).getSampleValue()
-          ssSignalSample.sampleValue = sampleValue
+          if (ssSignalSample.originEntityType === proto.EntityType.SS_SEISMIC) {
+            let sampleValue = proto.ss_signal_sample.deserializeBinary(content).getSampleValue();
+            ssSignalSample.sampleValue = sampleValue;
+          }
           store.commit('resolveSample', { ssSignalSample, mainPacket });
+          console.log({ ssSignalSample, mainPacket }, "123123");
           break;
         // 获取样本列表
         case MessageType.PC_SAMPLE_LIST:

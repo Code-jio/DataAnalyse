@@ -3,7 +3,7 @@
   <div class="common-layout">
     <el-container>
       <!-- 侧栏 样本列表 -->
-      <el-aside width="380px">
+      <el-aside width="350px">
         <!-- 时间选择 -->
 
         <!-- 样本列表 -->
@@ -21,13 +21,16 @@
         <!-- 头部 -->
         <el-header>
           <el-card>
+            <!-- 时间选择器 -->
             <TimePicker></TimePicker>
           </el-card>
         </el-header>
         <!-- 主体部分 -->
         <el-main
           ><!-- 图片列表 -->
-          <PhotoList></PhotoList>
+          <el-card class="Card">
+            <PhotoList></PhotoList>
+          </el-card>
           <!-- 统计图 -->
           <el-card>
             <LineChart></LineChart>

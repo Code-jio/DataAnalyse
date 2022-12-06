@@ -1,15 +1,22 @@
 <template>
   <div class="photoList" ref="scrollBar" @mousewheel="horizontalScroll">
-    <div class="photo" v-for="i in 20" :key="i">
-      <img class="image" src="@/assets/images/23.jpg" alt="" srcset="" />
+    <div class="photo" v-for="(item, i) in store.state.photoList" :key="i">
+      <img class="image" :src="item.sampleValue" />
       <div class="imageInfo">
-        <el-descriptions title="图片信息:" :column="1" direction="horizontal">
-          <el-descriptions-item label="图片ID:"> {{}} </el-descriptions-item>
-          <el-descriptions-item label="获取时间:">
-            18100000000
+        <el-descriptions :column="1" direction="horizontal">
+          <el-descriptions-item label="ID:">
+            {{ item.sampleId }}
           </el-descriptions-item>
-          <el-descriptions-item label="目标类型:">Suzhou</el-descriptions-item>
-          <el-descriptions-item label="标签:">
+          <el-descriptions-item label="采样时间:">
+            {{ getTime(item.time * 1000, "hh:mm:ss") }}
+          </el-descriptions-item>
+          <el-descriptions-item label="分类器:">
+            {{ item.time }}
+          </el-descriptions-item>
+          <el-descriptions-item label="分类结果:">
+            {{ item.time }}
+          </el-descriptions-item>
+          <el-descriptions-item>
             <el-radio-group v-model="label" @change="chooseLabel" size="small">
               <el-radio-button label="人员" />
               <el-radio-button label="车辆" />
@@ -26,16 +33,16 @@
 <script setup>
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
-
+import { getTime } from "@/utils/utils.js";
 const store = useStore();
+
 // eslint-disable-next-line no-unused-vars
-const data = computed(() => store.state.photoList);
+const photoList = computed(() => store.state.photoList);
 
 const scrollBar = ref(null);
 const horizontalScroll = (e) => {
   scrollBar.value.scrollLeft += e.deltaY;
 };
-
 const label = ref("");
 const chooseLabel = (e) => {
   console.log(e);
@@ -45,9 +52,13 @@ const chooseLabel = (e) => {
 <style scoped lang="sass">
 .photoList {
   width: 98%;
-  margin: 10px auto;
+  height: 190px;
+  margin: 0px auto;
   display: flex;
   overflow-x: scroll;
+  justify-content: space-between;
+  align-content: flex-start;
+  // flex-wrap: wrap;
   &::-webkit-scrollbar {
       width: 10px;
       height: 10px;
@@ -57,16 +68,17 @@ const chooseLabel = (e) => {
       box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
       background: rgba(100, 100, 100, 0.5);
     }
-    &::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-      border-radius: 5px;
-      background: rgba(0, 0, 0, 0.1);
-    }
+    // &::-webkit-scrollbar-track {
+    //   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    //   border-radius: 5px;
+    //   background: rgba(0, 0, 0, 0.1);
+    // }
   .photo {
     width: 100%;
-    height: 150px;
-    margin: 10px 15px 14px;
+    height: 180px;
+    // margin: 10px 15px 14px;
     display: flex;
+
     img {
         background-color: pink;
         // width: 200px;

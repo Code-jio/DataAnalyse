@@ -1,7 +1,7 @@
 /**
  * 获取当前日期时间 毫秒级
  */
-export function getTime(timestamp) {
+export function getTime(timestamp, type) {
     let date = new Date(timestamp)
 
     let Y = date.getFullYear();
@@ -10,7 +10,12 @@ export function getTime(timestamp) {
     let h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
     let m = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
     let s = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
-    return Y + "-" + M + "-" + D + "   " + h + ":" + m + ":" + s;
+
+    if (type === "YYYY-MM-DD  hh:mm:ss") {
+        return Y + "-" + M + "-" + D + "   " + h + ":" + m + ":" + s;
+    } else if (type === "hh:mm:ss") {
+        return h + ":" + m + ":" + s;
+    }
 }
 
 /**

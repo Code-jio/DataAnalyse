@@ -12,7 +12,7 @@
 
 .del-button {
   position: relative;
-  right: -125px;
+  right: -95px;
   top: -117px;
 }
 
@@ -24,4 +24,8 @@
 
 .el-descriptions__header {
   margin-bottom: 4px;
+}
+
+.el-descriptions__label:not(.is-bordered-label) {
+  margin-right: 3px;
 }

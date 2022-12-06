@@ -91,7 +91,7 @@ onMounted(() => {
 <style lang="sass" scoped>
 .barChart{
   width: 98%;
-  height: 280px;
+  height: 276px;
   margin: 0 auto;
 }
 </style>
