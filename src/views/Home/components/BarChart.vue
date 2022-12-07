@@ -86,6 +86,9 @@ onMounted(() => {
       });
   }, 500);
   option && BarChart.setOption(option);
+  window.addEventListener("resize", function () {
+    BarChart.resize();
+  });
 });
 </script>
 <style lang="sass" scoped>

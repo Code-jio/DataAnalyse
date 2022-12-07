@@ -82,6 +82,10 @@ onMounted(() => {
       });
   }, 500);
   option && LineChart.setOption(option);
+  // 折线图自适应
+  window.addEventListener("resize", function () {
+    LineChart.resize();
+  });
 });
 </script>
 <style lang="sass" scoped>
