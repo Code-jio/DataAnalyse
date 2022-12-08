@@ -17,7 +17,6 @@ function sendLoginMsg(msg) {
   mainPack.setOriginEntityId(msg.id); // 登陆设备id
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
-  // console.log('成功发送登录信息', mainPack.serializeBinary());
   return mainPack.serializeBinary();
 }
 
@@ -87,7 +86,7 @@ let SocketManager = (function () {
           let spClassifyInfo = proto.sp_classify_info
             .deserializeBinary(content)
             .toObject();
-          console.log(spClassifyInfo, "已获取样本分类信息");
+          // console.log(spClassifyInfo, "已获取样本分类信息");
           store.commit('getSPClassifyInfo', spClassifyInfo);
           break;
         // 算法分类结果
@@ -108,7 +107,6 @@ let SocketManager = (function () {
             ssSignalSample.sampleValue = sampleValue;
           }
           store.commit('resolveSample', { ssSignalSample, mainPacket });
-          console.log({ ssSignalSample, mainPacket }, "123123");
           break;
         // 获取样本列表
         case MessageType.PC_SAMPLE_LIST:

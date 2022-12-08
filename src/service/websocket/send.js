@@ -1,6 +1,6 @@
 /* eslint-disable */
 import socketMgr from '@/service/websocket/websocket';
-import store from '@/store'; //在js文件引入store模块
+import store from '@/store';
 
 /**
  * 请求样本列表
@@ -20,9 +20,7 @@ export function reqSampleList(startTime, endTime, id = proto.EntityType.SS_SEISM
   mainPack.setOriginEntityId(store.state.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
-  // console.log(mainPack);
   socketMgr.send(mainPack.serializeBinary());
-  // console.log('请求样本列表');
 }
 
 /**
@@ -43,7 +41,6 @@ export function reqRelatedSample(id, type, destEntityId = store.state.userID) {
   mainPack.setOriginEntityId(store.state.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
-  // console.log(mainPack);
   socketMgr.send(mainPack.serializeBinary());
 }
 
@@ -64,9 +61,7 @@ export function reqSampleData(id) {
   mainPack.setOriginEntityId(store.state.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
-  // console.log(mainPack);
   socketMgr.send(mainPack.serializeBinary());
-  // console.log('请求震动样本数据');
 }
 
 /**
@@ -87,7 +82,6 @@ export function reqFftData(sampleID, destEntityId = store.state.userID) {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  // console.log('请求傅里叶变换数据');
 }
 
 /**
@@ -107,7 +101,6 @@ export function reqDeleteSample(sampleID) {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  console.log('请求删除样本数据');
 }
 
 /**
@@ -148,7 +141,6 @@ export function reqAlgo(sampleID, AlgoType, destEntityId = store.state.userID) {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  console.log('请求样本分类结果', R2S);
 }
 
 /**
@@ -171,7 +163,6 @@ export function sendTags(sampleID, targetType, confidenceLevel = 100) {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  // console.log('发送标签', AlgoClassifyRst);
 }
 
 /**
@@ -193,7 +184,6 @@ export function login(msg) {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  // console.log('成功发送登录信息', mainPack.serializeBinary());
   return mainPack.serializeBinary();
 }
 
@@ -215,7 +205,6 @@ export function sendSubscribeTable(msg) {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  // console.log('发送订阅表', mainPack.serializeBinary());
   return mainPack.serializeBinary();
 }
 
@@ -235,7 +224,6 @@ export function getSensorList() {
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
-  console.log('完成主页加载，发出传感器列表请求');
 }
 
 // 请求拓扑图数据
@@ -251,7 +239,7 @@ export function getTopoList() {
   mainPack.setOriginEntityId(store.state.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
-  socketMgr.send(mainPack.serializeBinary()) && console.log('发出拓扑列表请求');
+  socketMgr.send(mainPack.serializeBinary());
 }
 
 /**

@@ -37,12 +37,12 @@ export default createStore({
         // 解析样本数据
         resolveSample(state, payload) {
             if (payload.ssSignalSample.originEntityType === proto.EntityType.SS_SEISMIC) {
-                console.log("接收的是数据库中的震动信号样本数据", payload.mainPacket);
+                // console.log("接收的是数据库中的震动信号样本数据", payload.mainPacket);
                 getArr(decodeBuffer(payload.ssSignalSample.sampleValue))
                 payload.ssSignalSample.sampleValue = getArr(decodeBuffer(payload.ssSignalSample.sampleValue))
                 state.shakeData = payload.ssSignalSample.sampleValue;
             } else if (payload.ssSignalSample.originEntityType === proto.EntityType.SS_CAMERA) {
-                console.log("接收的是数据库中的图片");
+                // console.log("接收的是数据库中的图片");
                 payload.ssSignalSample.sampleValue =
                     'data:image/jpg;base64,' + payload.ssSignalSample.sampleValue;
                 payload.ssSignalSample.tag = ""
