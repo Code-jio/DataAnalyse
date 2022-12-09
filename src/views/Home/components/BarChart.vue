@@ -2,6 +2,13 @@
   <div class="pos-rela">
     <div class="barChart" ref="bar"></div>
     <el-button
+      class="btn256"
+      :disabled="!sampleInfo"
+      @click="reqFftData(sampleInfo.id, store.state.userID, 256)"
+    >
+      256
+    </el-button>
+    <el-button
       class="btn512"
       :disabled="!sampleInfo"
       @click="reqFftData(sampleInfo.id, store.state.userID, 512)"
@@ -55,6 +62,11 @@ let option = {
       },
     },
   },
+  dataZoom: [
+    {
+      type: "inside",
+    },
+  ],
   legend: {},
   toolbox: {
     show: true,
@@ -63,11 +75,6 @@ let option = {
       restore: {},
       saveAsImage: {},
     },
-  },
-  dataZoom: {
-    show: false,
-    start: 0,
-    end: 100,
   },
   xAxis: [
     {
@@ -119,16 +126,22 @@ onMounted(() => {
   height: 276px;
   margin: 0 auto;
 }
+    .btn256{
+    position: absolute;
+    width: 50px;
+    right: 20px;
+    top: 40px;
+  }
   .btn512{
     position: absolute;
     width: 50px;
-    left: 0px;
-    top: 0px;
+    right: 20px;
+    top:90px;
   }
   .btn1024{
     position: absolute;
     width: 50px;
-    left: 50px;
-    top: 0px;
+    right: 20px;
+    top: 140px;
   }
 </style>
