@@ -4,15 +4,15 @@
       v-model="time"
       type="datetimerange"
       :shortcuts="shortcuts"
-      range-separator="To"
-      start-placeholder="Start date"
-      end-placeholder="End date"
+      range-separator="至"
+      start-placeholder="开始时间"
+      end-placeholder="结束时间"
       format="YYYY/MM/DD hh:mm:ss"
       value-format="x"
     />
-    <el-button class="btn" @click="timeCommit()" color="#626aef"
-      >提交</el-button
-    >
+    <el-button class="btn" @click="timeCommit()" color="#626aef">
+      提交
+    </el-button>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ const time = ref("");
 
 const shortcuts = [
   {
-    text: "Last an hour",
+    text: "最近一小时",
     value: () => {
       const end = new Date();
       const start = new Date();
@@ -33,7 +33,7 @@ const shortcuts = [
     },
   },
   {
-    text: "Last 3 hours",
+    text: "最近三小时",
     value: () => {
       const end = new Date();
       const start = new Date();
@@ -42,7 +42,7 @@ const shortcuts = [
     },
   },
   {
-    text: "Last day",
+    text: "最近一天",
     value: () => {
       const end = new Date();
       const start = new Date();
@@ -51,7 +51,7 @@ const shortcuts = [
     },
   },
   {
-    text: "Last week",
+    text: "最近一周",
     value: () => {
       const end = new Date();
       const start = new Date();

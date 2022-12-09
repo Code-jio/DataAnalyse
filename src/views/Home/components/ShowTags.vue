@@ -3,44 +3,44 @@
     <el-card class="Card">
       <span>样本ID: {{ sampleInfo ? sampleInfo.id : "暂未选中目标样本" }}</span>
       <br />
-      <span
-        >样本获取时间:
-        {{ sampleInfo ? sampleInfo.date : "暂未选中目标样本" }}</span
-      >
+      <span>
+        样本获取时间:
+        {{ sampleInfo ? sampleInfo.date : "暂未选中目标样本" }}
+      </span>
       <br />
-      <span
-        >目标类型:
+      <span>
+        目标类型:
         {{
           sampleClassifyInfo.targetType
             ? getTargetType(sampleClassifyInfo.targetType)
             : "尚无数据"
-        }}</span
-      >
+        }}
+      </span>
       <br />
-      <span
-        >置信度:
+      <span>
+        置信度:
         {{
           sampleClassifyInfo.confidenceLevel
             ? sampleClassifyInfo.confidenceLevel
             : "0"
-        }}</span
-      >
+        }}
+      </span>
       <br />
-      <span
-        >实体ID:
+      <span>
+        实体ID:
         {{
           sampleClassifyInfo.entityId ? sampleClassifyInfo.entityId : "尚无数据"
-        }}</span
-      >
+        }}
+      </span>
       <br />
-      <span
-        >算法类型:
+      <span>
+        算法类型:
         {{
           sampleClassifyInfo.entityType
             ? getEntityType(sampleClassifyInfo.entityType).id
             : "尚无数据"
-        }}</span
-      >
+        }}
+      </span>
       <el-button
         type="danger"
         :icon="Delete"
@@ -48,8 +48,9 @@
         class="del-button"
         :disabled="!sampleInfo"
         @click="deleteSample(sampleInfo)"
-        >删除</el-button
       >
+        删除
+      </el-button>
       <br />
       <!-- 标签区域 -->
       <div class="labelArea">

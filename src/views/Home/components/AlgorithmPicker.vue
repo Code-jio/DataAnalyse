@@ -12,7 +12,7 @@
       :disabled="!sampleInfo"
     />
   </el-select>
-  <el-button color="#626aef" @click="pickAlogo">确认</el-button>
+  <el-button color="#626aef" @click="pickAlgo">确认</el-button>
 </template>
 
 <script setup>
@@ -38,7 +38,7 @@ emitter.on("sendRow", (info) => {
   sampleInfo.value = info;
 });
 
-const pickAlogo = () => {
+const pickAlgo = () => {
   console.log(sampleInfo.value.id, value.value);
 };
 </script>
