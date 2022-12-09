@@ -1,0 +1,11 @@
+.pos-rela {
+  position: relative;
+}
+.Card {
+  margin: 10px auto;
+}
+.del-button {
+  position: relative;
+  right: -90px;
+  top: -117px;
+}

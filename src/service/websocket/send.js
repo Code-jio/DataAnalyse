@@ -68,11 +68,12 @@ export function reqSampleData(id) {
  * 请求傅里叶变换数据
  * @param { Number } sampleID 样本ID
  * @param { Number } destEntityId 目标ID
+ * @param { Number } number 默认为256
  */
-export function reqFftData(sampleID, destEntityId = store.state.userID) {
+export function reqFftData(sampleID, destEntityId = store.state.userID, number = 256) {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(8);
-  R2S.setParams(`${sampleID},${destEntityId}`);
+  R2S.setParams(`${sampleID},${destEntityId},${number}`);
   // 消息主体打包
   let mainPack = new proto.main_packet();
   mainPack.setContent(R2S.serializeBinary());

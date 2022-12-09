@@ -17,7 +17,7 @@
 
 <script setup>
 import { ref } from "vue";
-// import { reqAlgo } from "@/service/websoket/send.js";
+import { reqAlgo } from "@/service/websocket/send.js";
 import emitter from "@/utils/eventBus.js";
 const value = ref();
 const options = [
@@ -39,7 +39,8 @@ emitter.on("sendRow", (info) => {
 });
 
 const pickAlgo = () => {
-  console.log(sampleInfo.value.id, value.value);
+  // console.log(sampleInfo.value.id, value.value);
+  reqAlgo(sampleInfo.value.id, value.value);
 };
 </script>
 

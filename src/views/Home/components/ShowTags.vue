@@ -11,8 +11,8 @@
       <span>
         目标类型:
         {{
-          sampleClassifyInfo.targetType
-            ? getTargetType(sampleClassifyInfo.targetType)
+          sampleTag.targetType
+            ? getTargetType(sampleTag.targetType)
             : "尚无数据"
         }}
       </span>
@@ -20,9 +20,9 @@
       <span>
         置信度:
         {{
-          sampleClassifyInfo.confidenceLevel
-            ? sampleClassifyInfo.confidenceLevel
-            : "0"
+          sampleTag.confidenceLevel === 0
+            ? sampleTag.confidenceLevel
+            : "尚无数据"
         }}
       </span>
       <br />
@@ -82,6 +82,7 @@ import { ref, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 const sampleClassifyInfo = computed(() => store.state.sampleClassifyInfo);
+const sampleTag = computed(() => store.state.sampleTag);
 const sampleInfo = ref(undefined);
 // 获取行数据
 emitter.on("sendRow", (info) => {

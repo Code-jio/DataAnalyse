@@ -6,7 +6,10 @@ import App from "./App";
 
 import ElementPlus from "element-plus"
 import "element-plus/dist/index.css"
+
+import "@/styles/preset.css"
 import "@/styles/localize.css"
+import "@/styles/common.css"
 
 
 import store from "./store";

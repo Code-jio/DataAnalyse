@@ -14,9 +14,7 @@
             {{ getEntityType(item.originEntityType).id }}
             <!-- {{ item.originEntityType }} -->
           </el-descriptions-item>
-          <el-descriptions-item label="分类结果:">
-            {{ item.time }}
-          </el-descriptions-item>
+          <el-descriptions-item label="分类结果:"> </el-descriptions-item>
           <el-descriptions-item>
             <el-radio-group
               v-model="item.tag"
@@ -49,8 +47,27 @@ const scrollBar = ref(null);
 const horizontalScroll = (e) => {
   scrollBar.value.scrollLeft += e.deltaY;
 };
-const chooseLabel = (e) => {
-  console.log(e);
+const chooseLabel = (item) => {
+  switch (item.tag) {
+    case "人员":
+      // eslint-disable-next-line no-undef
+      sendTags(item.sampleId, proto.TargetType.TT_HUMAN);
+      break;
+    case "车辆":
+      // eslint-disable-next-line no-undef
+      sendTags(item.sampleId, proto.TargetType.TT_VEHICLE);
+      break;
+    case "未分类":
+      // eslint-disable-next-line no-undef
+      sendTags(item.sampleId, proto.TargetType.TT_UNCLASSIFIED);
+      break;
+    case "其他":
+      // eslint-disable-next-line no-undef
+      sendTags(item.sampleId, proto.TargetType.TT_OTHER);
+      break;
+    default:
+      return;
+  }
 };
 </script>
 

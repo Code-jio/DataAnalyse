@@ -1,21 +1,43 @@
 <template>
-  <div class="barChart" ref="bar"></div>
+  <div class="pos-rela">
+    <div class="barChart" ref="bar"></div>
+    <el-button
+      class="btn512"
+      :disabled="!sampleInfo"
+      @click="reqFftData(sampleInfo.id, store.state.userID, 512)"
+    >
+      512
+    </el-button>
+    <el-button
+      class="btn1024"
+      :disabled="!sampleInfo"
+      @click="reqFftData(sampleInfo.id, store.state.userID, 1024)"
+    >
+      1024
+    </el-button>
+  </div>
 </template>
 
 <script setup>
 import * as echarts from "echarts";
+import emitter from "@/utils/eventBus.js";
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
-
+import { reqFftData } from "@/service/websocket/send.js";
 const bar = ref(null);
 const store = useStore();
 
-const categories = function () {
+const sampleInfo = ref(undefined);
+// 获取行数据
+emitter.on("sendRow", (info) => {
+  sampleInfo.value = info;
+});
+
+const categories = function (length) {
   let res = [];
-  for (let i = 0; i < 128; i++) {
+  for (let i = 0; i < length; i++) {
     res.push(i);
   }
-  return res;
 };
 
 let option = {
@@ -51,7 +73,7 @@ let option = {
     {
       type: "category",
       boundaryGap: true,
-      data: categories(),
+      data: categories(store.state.ssSeimicFft.length),
     },
   ],
   yAxis: [
@@ -97,4 +119,16 @@ onMounted(() => {
   height: 276px;
   margin: 0 auto;
 }
+  .btn512{
+    position: absolute;
+    width: 50px;
+    left: 0px;
+    top: 0px;
+  }
+  .btn1024{
+    position: absolute;
+    width: 50px;
+    left: 50px;
+    top: 0px;
+  }
 </style>

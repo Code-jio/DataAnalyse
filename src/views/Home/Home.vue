@@ -20,7 +20,7 @@
       <el-container>
         <!-- 头部 -->
         <el-header>
-          <el-card>
+          <el-card class="Card">
             <!-- 时间选择器 -->
             <TimePicker></TimePicker>
           </el-card>

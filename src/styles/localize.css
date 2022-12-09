@@ -1,19 +1,6 @@
-/* body {
-  background-color: rgb(254, 250, 230);
-} */
-
-.Card {
-  margin: 0 auto 10px;
-}
 .el-card {
   overflow: auto;
   --el-card-padding: 16px;
-}
-
-.del-button {
-  position: relative;
-  right: -90px;
-  top: -117px;
 }
 
 .el-descriptions__body

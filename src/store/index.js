@@ -29,6 +29,7 @@ export default createStore({
         },
         // 获取样本列表
         getSampleList(state, payload) {
+            if (state.sampleList) state.sampleList = []
             for (let i = 0; i < payload.sampleListList.length; i++) {
                 payload.sampleListList[i].date = getTime(payload.sampleListList[i].time * 1000, "YYYY-MM-DD  hh:mm:ss")
             }
@@ -37,6 +38,7 @@ export default createStore({
         // 解析样本数据
         resolveSample(state, payload) {
             if (payload.ssSignalSample.originEntityType === proto.EntityType.SS_SEISMIC) {
+                if (state.shakeData) state.shakeData = []
                 // console.log("接收的是数据库中的震动信号样本数据", payload.mainPacket);
                 getArr(decodeBuffer(payload.ssSignalSample.sampleValue))
                 payload.ssSignalSample.sampleValue = getArr(decodeBuffer(payload.ssSignalSample.sampleValue))
@@ -63,8 +65,10 @@ export default createStore({
             state.sampleClassifyInfo = payload
         },
         // 重置photolist
-        resetPhotoList(state, payload) {
+        resetData(state, payload) {
             state.photoList = payload
+            state.sampleTag = payload
+            state.sampleClassifyInfo = payload
         }
     },
     getters: {},
