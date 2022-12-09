@@ -12,7 +12,6 @@
           </el-descriptions-item>
           <el-descriptions-item label="分类器:">
             {{ getEntityType(item.originEntityType).id }}
-            <!-- {{ item.originEntityType }} -->
           </el-descriptions-item>
           <el-descriptions-item label="分类结果:"> </el-descriptions-item>
           <el-descriptions-item>
@@ -37,7 +36,7 @@
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 import { getTime } from "@/utils/utils.js";
-import { getEntityType } from "@/service/websocket/send.js";
+import { getEntityType, sendTags } from "@/service/websocket/send.js";
 const store = useStore();
 
 // eslint-disable-next-line no-unused-vars
@@ -90,25 +89,18 @@ const chooseLabel = (item) => {
       box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
       background: rgba(100, 100, 100, 0.5);
     }
-    // &::-webkit-scrollbar-track {
-    //   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    //   border-radius: 5px;
-    //   background: rgba(0, 0, 0, 0.1);
-    // }
+  
   .photo {
     width: 100%;
     height: 180px;
-    // margin: 10px 15px 14px;
     display: flex;
 
     img {
         background-color: pink;
-        // width: 200px;
     }
     .imageInfo{
       margin-left:10px;
       width: 210px;
-      // background-color: rgb(254, 250, 230);
     }
     span {
         font-size: 16px;

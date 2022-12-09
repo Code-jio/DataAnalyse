@@ -18,7 +18,7 @@ export default createStore({
         // 获取傅里叶变换数据
         addFftData(state, payload) {
             let data = [];
-            for (let i = 1; i < payload.length; i++) {
+            for (let i = 0; i < payload.length; i++) {
                 data.push(payload[i]);
             }
             state.ssSeimicFft = data;
