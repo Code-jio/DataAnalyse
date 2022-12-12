@@ -15,19 +15,14 @@ let option = {
     text: "震动信号",
     left: "center",
   },
+  tooltip: {
+    trigger: "axis",
+    snap: true,
+    formatter: "index:{b}<br/> 参数值：{c}",
+  },
   xAxis: [
     {
       type: "category",
-      // data: categories.value,
-
-      // data: () => {
-      //   const arr = [];
-      //   for (let i = 0; i < store.state.shakeData.length; i++) {
-      //     arr.push(i + 1);
-      //   }
-      //   return arr;
-      // },
-      // data: [],
     },
   ],
   yAxis: {
@@ -40,7 +35,6 @@ let option = {
   ],
   legend: {
     left: "left",
-    // 图例的布局朝向
     orient: "verical",
   },
   series: [
@@ -48,15 +42,12 @@ let option = {
       type: "line",
       data: [...store.state.shakeData],
       smooth: true, // 开启平滑过渡
-      markLine: {
-        // data: [{ type: 'average', name: '平均值' }]
-      },
+      markLine: {},
     },
   ],
   toolbox: {
     show: true,
     feature: {
-      dataView: { readOnly: false },
       restore: {},
       saveAsImage: {},
       maginType: {

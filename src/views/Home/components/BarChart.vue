@@ -71,7 +71,6 @@ let option = {
   toolbox: {
     show: true,
     feature: {
-      dataView: { readOnly: false },
       restore: {},
       saveAsImage: {},
     },
