@@ -9,6 +9,8 @@ function sendLoginMsg(msg) {
   let loginMsg = new proto.pc_logon_request();
   loginMsg.setUsername(msg.Account);
   loginMsg.setPassword(msg.Passwd);
+
+
   // 消息主体打包
   let mainPack = new proto.main_packet();
   mainPack.setContent(loginMsg.serializeBinary());
@@ -24,16 +26,6 @@ let url = 'ws://172.16.100.240:20002';
 let _socket;
 // 没有服务器的前提下 用浏览器作为运行环境 寻找用于绘图的包
 let SocketManager = (function () {
-  let log = function (s) {
-    console.log('[socket]' + s);
-  };
-  // 关闭原因
-  let CLOSE_REASON = {
-    socketFail: 0,
-    doError: 1,
-    reconnect: 2,
-    forceClose: 3
-  };
   let MessageType;
   /**
    * @lends module:SocketMgr

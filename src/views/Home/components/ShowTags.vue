@@ -10,19 +10,15 @@
       <br />
       <span>
         目标类型:
-        {{
-          sampleTag.targetType
-            ? getTargetType(sampleTag.targetType)
-            : "尚无数据"
-        }}
+        {{ getTargetType(sampleTag.targetType) }}
       </span>
       <br />
       <span>
         置信度:
         {{
           sampleTag.confidenceLevel === 0
-            ? sampleTag.confidenceLevel
-            : "尚无数据"
+            ? "尚无数据"
+            : sampleTag.confidenceLevel
         }}
       </span>
       <br />

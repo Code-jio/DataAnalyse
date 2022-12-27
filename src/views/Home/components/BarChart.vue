@@ -1,5 +1,5 @@
 <template>
-  <div class="pos-rela">
+  <div class="position-relation">
     <div class="barChart" ref="bar"></div>
     <el-button
       class="btn256"
@@ -16,6 +16,7 @@
       512
     </el-button>
     <el-button
+      type="primary"
       class="btn1024"
       :disabled="!sampleInfo"
       @click="reqFftData(sampleInfo.id, store.state.userID, 1024)"
@@ -31,6 +32,7 @@ import emitter from "@/utils/eventBus.js";
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 import { reqFftData } from "@/service/websocket/send.js";
+
 const bar = ref(null);
 const store = useStore();
 
@@ -79,7 +81,7 @@ let option = {
     {
       type: "category",
       boundaryGap: true,
-      data: categories(store.state.ssSeimicFft.length),
+      data: categories(store.state.ssSeimicFft.data.length),
     },
   ],
   yAxis: [
@@ -94,10 +96,11 @@ let option = {
     {
       name: "",
       type: "bar",
-      data: store.state.ssSeimicFft,
+      data: store.state.ssSeimicFft.data,
     },
   ],
 };
+
 onMounted(() => {
   let BarChart = echarts.init(bar.value);
 
@@ -108,7 +111,7 @@ onMounted(() => {
           {
             name: "",
             type: "bar",
-            data: store.state.ssSeimicFft,
+            data: store.state.ssSeimicFft.data,
           },
         ],
       });
@@ -120,7 +123,7 @@ onMounted(() => {
 });
 </script>
 <style lang="sass" scoped>
-.barChart{
+ .barChart{
   width: 98%;
   height: 276px;
   margin: 0 auto;

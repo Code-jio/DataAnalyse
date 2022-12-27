@@ -6,8 +6,8 @@ import {
 } from "@/utils/dataTransform.js"
 export default createStore({
     state: {
-        shakeData: [],
-        ssSeimicFft: [],
+        shakeData: { data: [], chartType: "Line" },
+        ssSeimicFft: { data: [], chartType: "Bar" },
         userID: null,
         sampleList: [],
         photoList: [],
@@ -21,7 +21,8 @@ export default createStore({
             for (let i = 0; i < payload.length; i++) {
                 data.push(payload[i]);
             }
-            state.ssSeimicFft = data;
+            state.ssSeimicFft.data = data;
+            state.ssSeimicFft.chartType = "Bar";
         },
         // 获取用户id
         getUserID(state, payload) {
@@ -38,11 +39,11 @@ export default createStore({
         // 解析样本数据
         resolveSample(state, payload) {
             if (payload.ssSignalSample.originEntityType === proto.EntityType.SS_SEISMIC) {
-                if (state.shakeData) state.shakeData = []
+                if (state.shakeData.data) state.shakeData.data = []
                 // console.log("接收的是数据库中的震动信号样本数据", payload.mainPacket);
                 getArr(decodeBuffer(payload.ssSignalSample.sampleValue))
                 payload.ssSignalSample.sampleValue = getArr(decodeBuffer(payload.ssSignalSample.sampleValue))
-                state.shakeData = payload.ssSignalSample.sampleValue;
+                state.shakeData.data = payload.ssSignalSample.sampleValue;
             } else if (payload.ssSignalSample.originEntityType === proto.EntityType.SS_CAMERA) {
                 // console.log("接收的是数据库中的图片");
                 payload.ssSignalSample.sampleValue =

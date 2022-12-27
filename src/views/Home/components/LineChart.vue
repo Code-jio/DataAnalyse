@@ -40,7 +40,7 @@ let option = {
   series: [
     {
       type: "line",
-      data: [...store.state.shakeData],
+      data: [...store.state.shakeData.data],
       smooth: true, // 开启平滑过渡
       markLine: {},
     },
@@ -67,7 +67,7 @@ onMounted(() => {
           {
             name: "",
             type: "line",
-            data: store.state.shakeData,
+            data: store.state.shakeData.data,
           },
         ],
       });

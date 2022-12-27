@@ -39,8 +39,7 @@ const getStyleLoader = (pre) => {
             loader: pre,
             options: pre === "sass-loader" ? {
                 additionalData: `@use "@/styles/element/index.scss" as *;`,
-            }
-                : {}
+            } : {}
         }
     ].filter(Boolean) // filter(Boolean) 过滤掉undefined值 
 }
@@ -161,9 +160,9 @@ module.exports = {
             resolvers: [
                 ElementPlusResolver({
                     importStyle: "sass" // 自定义主题
-                })
-            ]
-        })
+                }),
+            ],
+        }),
     ].filter(Boolean),
     mode: isProdution ? "production" : "development",
     devtool: isProdution ? "source-map" : "cheap-module-source-map",
