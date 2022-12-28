@@ -79,8 +79,8 @@ onMounted(() => {
   });
 });
 </script>
-<style lang="sass" scoped>
-.chart{
+<style lang="scss" scoped>
+.chart {
   width: 98%;
   height: 276px;
   margin: 0 auto;

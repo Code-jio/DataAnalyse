@@ -50,4 +50,4 @@ import PhotoList from "./components/PhotoList.vue";
 import ShowTags from "./components/ShowTags.vue";
 import AlgorithmPicker from "./components/AlgorithmPicker.vue";
 </script>
-<style lang="sass" scoped></style>
+<style lang="scss" scoped></style>

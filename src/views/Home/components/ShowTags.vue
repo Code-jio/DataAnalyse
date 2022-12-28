@@ -120,8 +120,8 @@ const chooseLabel = (e) => {
 };
 </script>
 
-<style lang="sass" scoped>
-.labelArea{
+<style lang="scss" scoped>
+.labelArea {
   vertical-align: middle;
 }
 </style>

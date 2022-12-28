@@ -47,9 +47,9 @@ const getRowSignal = (e) => {
 };
 </script>
 
-<style scoped lang="sass">
+<style scoped lang="scss">
 .sampleList {
-  margin:0 auto;
+  margin: 0 auto;
   width: 98%;
 }
 </style>

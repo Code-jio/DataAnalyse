@@ -78,16 +78,15 @@ const timeCommit = () => {
 };
 </script>
 
-<style lang="sass" scoped>
-
-.block{
+<style lang="scss" scoped>
+.block {
   width: 80%;
   margin-left: 1%;
   .btn {
     // margin: 0 auto;
     position: relative;
-left: 30px;
-  top: -2px;
+    left: 30px;
+    top: -2px;
   }
 }
 </style>

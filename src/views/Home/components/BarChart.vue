@@ -2,22 +2,21 @@
   <div class="position-relation">
     <div class="barChart" ref="bar"></div>
     <el-button
-      class="btn256"
+      class="btn_256"
       :disabled="!sampleInfo"
       @click="reqFftData(sampleInfo.id, store.state.userID, 256)"
     >
       256
     </el-button>
     <el-button
-      class="btn512"
+      class="btn_512"
       :disabled="!sampleInfo"
       @click="reqFftData(sampleInfo.id, store.state.userID, 512)"
     >
       512
     </el-button>
     <el-button
-      type="primary"
-      class="btn1024"
+      class="btn_1024"
       :disabled="!sampleInfo"
       @click="reqFftData(sampleInfo.id, store.state.userID, 1024)"
     >
@@ -122,28 +121,28 @@ onMounted(() => {
   });
 });
 </script>
-<style lang="sass" scoped>
- .barChart{
+<style lang="scss" scoped>
+.barChart {
   width: 98%;
   height: 276px;
   margin: 0 auto;
 }
-    .btn256{
-    position: absolute;
-    width: 50px;
-    right: 20px;
-    top: 40px;
-  }
-  .btn512{
-    position: absolute;
-    width: 50px;
-    right: 20px;
-    top:90px;
-  }
-  .btn1024{
-    position: absolute;
-    width: 50px;
-    right: 20px;
-    top: 140px;
-  }
+.btn_256 {
+  position: absolute;
+  width: 50px;
+  right: 20px;
+  top: 40px;
+}
+.btn_512 {
+  position: absolute;
+  width: 50px;
+  right: 20px;
+  top: 90px;
+}
+.btn_1024 {
+  position: absolute;
+  width: 50px;
+  right: 20px;
+  top: 140px;
+}
 </style>

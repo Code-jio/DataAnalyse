@@ -70,7 +70,7 @@ const chooseLabel = (item) => {
 };
 </script>
 
-<style scoped lang="sass">
+<style scoped lang="scss">
 .photoList {
   width: 98%;
   height: 190px;
@@ -81,30 +81,30 @@ const chooseLabel = (item) => {
   align-content: flex-start;
   // flex-wrap: wrap;
   &::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: 5px;
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-      background: rgba(100, 100, 100, 0.5);
-    }
-  
+    width: 10px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: rgba(100, 100, 100, 0.5);
+  }
+
   .photo {
     width: 100%;
     height: 180px;
     display: flex;
 
     img {
-        background-color: pink;
+      background-color: pink;
     }
-    .imageInfo{
-      margin-left:10px;
+    .imageInfo {
+      margin-left: 10px;
       width: 210px;
     }
     span {
-        font-size: 16px;
-        color: #000;
+      font-size: 16px;
+      color: #000;
     }
   }
 }
