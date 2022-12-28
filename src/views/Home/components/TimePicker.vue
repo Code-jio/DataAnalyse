@@ -10,7 +10,12 @@
       format="YYYY/MM/DD hh:mm:ss"
       value-format="x"
     />
-    <el-button class="btn" @click="timeCommit()" color="#626aef">
+    <el-button
+      class="btn"
+      :disabled="!time"
+      @click="timeCommit()"
+      color="#626aef"
+    >
       提交
     </el-button>
   </div>

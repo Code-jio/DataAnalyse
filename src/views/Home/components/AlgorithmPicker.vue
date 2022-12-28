@@ -12,7 +12,9 @@
       :disabled="!sampleInfo"
     />
   </el-select>
-  <el-button color="#626aef" @click="pickAlgo">确认</el-button>
+  <el-button color="#626aef" :disabled="!value" @click="pickAlgo"
+    >确认</el-button
+  >
 </template>
 
 <script setup>
@@ -37,10 +39,12 @@ let sampleInfo = ref(undefined);
 emitter.on("sendRow", (info) => {
   sampleInfo.value = info;
 });
-
+// 请求样本算法结果
 const pickAlgo = () => {
-  // console.log(sampleInfo.value.id, value.value);
-  reqAlgo(sampleInfo.value.id, value.value);
+  // console.log(sampleInfo.value.id, value.value);、
+  if (value.value) {
+    reqAlgo(sampleInfo.value.id, value.value);
+  }
 };
 </script>
 

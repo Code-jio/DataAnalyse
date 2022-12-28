@@ -78,7 +78,7 @@ let SocketManager = (function () {
           let spClassifyInfo = proto.sp_classify_info
             .deserializeBinary(content)
             .toObject();
-          // console.log(spClassifyInfo, "已获取样本分类信息");
+          console.log(spClassifyInfo, "已获取样本分类信息");
           store.commit('getSPClassifyInfo', spClassifyInfo);
           break;
         // 算法分类结果
@@ -86,7 +86,7 @@ let SocketManager = (function () {
           let algoClassifyRst = proto.algo_classify_rst
             .deserializeBinary(content)
             .toObject();
-          console.log(algoClassifyRst, "已获取算法分类结果");
+          // console.log(algoClassifyRst, "已获取算法分类结果");
           store.commit('getTag', algoClassifyRst);
           break;
         // 图像传感器 拍摄图片
