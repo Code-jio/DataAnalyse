@@ -1,0 +1,289 @@
+syntax = "proto3";
+
+enum EntityType {
+    //platform component
+    PC_REPEATER = 0;
+	PC_MONITOR = 1;
+	PC_SCHEDULER=2;
+	PC_DBPROXY=3;
+	//Gateway
+    GW_SERIALPORT = 11;
+	GW_WEBSOCKET = 12;
+    GW_MQTT = 13;
+	GW_LORABASE=14;
+	GW_DTU=15;
+	GW_CAMERA=16;
+	
+	//sensor
+	SS_SEISMIC=21;
+	SS_SOUND=22;
+	SS_MAGNETIC=23;
+	SS_RADAR=24;
+	SS_CAMERA=25;
+	SS_IR=26;
+	SS_TEMPERATURE=27;
+	
+	//Algorithm
+	ALGO_SVM=60;
+	ALGO_VISION=61;
+	//ALGO_FFT=62；
+	
+	//sample
+	SP_CLASSIFY_INFO=70;
+	
+	FE_BROWSER=100;
+	SS_OT=120;
+	OT_TEST=121;
+  }
+
+enum MessageType {
+    
+	//
+	//sensor
+     SS_WIRELESS_STATUS= 0;
+	 
+	 //SEISMIC
+	 SS_SEISMIC_RAWSIG=1;
+	 SS_SEISMIC_EVEVT=2;
+	 SS_SEISMIC_FFT=3;
+	 
+	 //MAGNETIC
+	 SS_MAGNETIC_RAWSIG=4;
+	 SS_MAGNETIC_EVENT=5;
+	 //SS_CAMERA_PIC=6;
+	 
+	 
+	 //radar
+	 SS_RADAR_EVENT=8;
+	 
+	 SS_SIGNAL_SAMPLE=9;
+	 
+	 SS_DETECTION_ACTIVATE=10;
+	 
+	 SS_2DOUBLES_STD=20;
+	 
+	 //cmd
+	 CMD_2SENSOR_STD=50;
+	 
+	 RQT_2PF_STD=51;
+	 
+	 //ALGO
+	 ALGO_CLASSIFY_RST=60;
+	 
+	 
+	 OT_TEST_MSG=100;
+	 
+	 PC_ENTITY_REGISTER=101;
+	 PC_SUBSCRIBE_UPDATE=102;
+	 PC_TOPOLOGY_UPDATE=103;
+	 
+	 PC_LOGON_REQUEST=104;
+	 PC_LOGON_ASW=105;
+	 
+	 PC_ID_START=106;
+	 PC_ID_TABLE=107;
+	 PC_NODES_MANAGED=108;
+	 
+	 PC_SAMPLE_LIST=109;
+	 
+	 PC_HEART_BEAT=127;
+ }
+  
+  
+enum TargetType {
+    //sensor
+     TT_HUMAN= 0;
+	 TT_VEHICLE=1;
+	 TT_UNCLASSIFIED=2;
+	 TT_OTHER=3;
+ }
+ 
+ 
+enum WorkingMode {
+     WM_STANDBY= 0;
+	 WM_EVENT_DETEC=1;
+	 WM_RAWSIG_PUSH=2;
+	 WM_OTHER=100;
+ }
+ 
+  
+
+message main_packet {
+    uint32 access_point_id = 1;
+    EntityType origin_entity_type = 2;
+	uint32 origin_entity_id=3;
+	MessageType message_type=4;
+	uint32 dest_entity_id=5;//if not 0,only transmit this msg to dest_entity
+	int64 time=6;
+	bytes token=7;
+	bytes content=8;
+	bytes check=9;
+	
+ }
+ 
+ 
+message ss_sensor_status {
+	double latitude=1;
+	double longitude=2;
+	double height=3;
+	uint32 power=4;
+	int32  com_status=5;
+	WorkingMode working_mode=6;
+}
+
+message ss_signal_sample {
+	uint32 sample_id=1;
+	EntityType origin_entity_type = 2;
+	uint32 origin_entity_id=3;
+	int64 time=4;
+	double latitude=5;
+	double longitude=6;
+	double height=7;
+	bytes sample_value=8;
+}
+
+message ss_detection_activate {
+	EntityType origin_entity_type = 1;
+	uint32 origin_entity_id=2;
+	int64 time=3;
+	double latitude=4;
+	double longitude=5;
+	double height=6;
+	uint32 confidence_level=7;
+}
+
+message pc_id_start
+{
+    uint32 start_index=1;
+}
+
+message pc_id_table
+{
+    repeated uint32 start_index=1;
+}
+
+message pc_nodes_managed
+{
+    repeated node_info nodes_info=1;
+}
+ 
+message ss_seimic_rawsig {
+	repeated uint32 sample_value=1;
+}
+ 
+message ss_seimic_fft {
+	repeated float sample_value=1;
+}
+ 
+message ss_seimic_event {
+	TargetType target_type=1;
+	uint32 intensity=2;
+	uint32 confidence_level=3;
+}
+ 
+  message ss_magnetic_event {
+	TargetType target_type=1;
+	uint32 variation=2;
+	uint32 confidence_level=3;
+}
+ 
+ 
+message ss_magnetic_rawsig {
+	double x=1;
+	double y=2;
+	double z=3;
+}
+
+
+message ss_2doubles_std {
+	double v1=1;
+	double v2=2;
+}
+
+message pc_entity_register {
+	bytes subscribe_table=1;
+}
+
+message pc_subscribe_update {
+	bytes subscribe_table=1;
+}
+
+message pc_topology_update {
+	repeated entity_statistic statistic=1;
+}
+
+
+message pc_logon_request {
+	string username=1;
+	string password=2;
+}
+
+message pc_logon_asw {
+    bool   rst=1;
+	uint32 id=2;
+	bytes  token=3;
+}
+
+
+message cmd_2sensor_std {
+	uint32 cmd_code=1;
+	string params=2;
+}
+
+message rqt_2pf_std {
+	uint32 rqt_code=1;
+	string params=2;
+}
+
+
+
+//ALGO_CLASSIFY_RST
+message algo_classify_rst {
+	uint32 sample_id=1;
+	TargetType target_type=2;
+	uint32 confidence_level=3;
+}
+
+//SP_CLASSIFY_INFO
+message sp_classify_info {
+	uint32 sample_id=1;
+	uint32 entity_id=2;
+	uint32 entity_type=3;
+	TargetType target_type=4;
+	uint32 confidence_level=5;
+	int64 time=6;	
+}
+
+
+message pc_heart_beat {
+	uint32 busyness=1;
+}
+
+ message ot_test_msg {
+	string msg=1;
+}
+ 
+ 
+ 
+message entity_statistic {
+    EntityType entity_type = 1;
+	uint32 count=2;
+}
+
+message node_info {
+    uint32 id=1;
+    EntityType entity_type = 2;
+}
+
+message pc_sample_info
+{
+	uint32 id=1;
+	int64 time=2;
+	TargetType target_type=3;
+	EntityType sensor_type=4;
+}
+
+//PC_SAMPLE_LIST
+message pc_sample_list {
+    repeated pc_sample_info sample_list = 1;
+}
