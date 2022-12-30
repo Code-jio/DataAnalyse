@@ -194,6 +194,8 @@ export function login(msg) {
  * @returns 打包后的主包
  */
 export function sendSubscribeTable(msg) {
+
+  console.log(msg);
   // 登录信息打包
   let pcEntityRegister = new proto.pc_entity_register();
   pcEntityRegister.setSubscribeTable(msg);

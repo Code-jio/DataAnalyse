@@ -1,6 +1,6 @@
 # 一款基于 webpack+vue3+element-plus+websocket 框架的半自动化数据分析工具
 
-### 运行要求
+### 运行环境要求
 
 ```bash
 node版本 v16.13.0
@@ -17,32 +17,21 @@ npm run build   打包
 
 ### 开发模式
 
-```
-1.由vuex实现全局状态管理，eventBus辅助实现兄弟间组件数据沟通。（由于体量原因，暂未实现模块化）
-2.在/router/index.js中创造对应页面的路由。
-3.模块化、组件化开发，合理掌握组件粒度。
-4.由webpack实现打包优化，优化elemen-plus组件加载，html、js、css样式、静态资源处理等（详见/config/webpack.config.js）
-5.
-```
-
-### 请求方式
-
-```
-1.后端更新proto文件之后，转换获取更新后的proto_main.js文件
-2.在/service/websocket/
-```
+> 1. 由 vuex 实现全局状态管理，eventBus 辅助实现兄弟间组件数据沟通（由于体量原因，暂未实现模块化）。
+>
+> 2. 在/router/index.js 中创造对应页面的路由。
+>
+> 3. 模块化、组件化开发，合理掌握组件粒度。
+>
+> 4. 由 webpack 实现打包优化，优化 elemen-plus 组件加载，html、js、css 样式、静态资源处理等（详见/config/webpack.config.js）。
 
 ### 演示地址
 
-```http
-localhost:3000
-```
+[localhost:3000]()
 
 ### 接口地址
 
-```
-ws://172.16.100.240:20002
-```
+[ws://172.16.100.240:20002]()
 
 ### 本地安装
 
@@ -64,17 +53,18 @@ vscode
 │   │   ├── css  打包后的css文件夹
 │   │   └── js  打包后的js文件夹
 │   ├── favicon.ico  网页图标
+│   └── index.html  打包后的html入口文件
+├── public  公共文件
+│   ├── favicon.ico  网页图标
 │   └── index.html  html入口文件
-├── public  公共
-│   ├── demo  mock示例
-│   ├── _createProductionServer.ts  mock注入初始化
-│   └── _util.ts 基础模型
 ├── src
 │   ├── assets 静态资源文件夹
 │   │   └── iamges 图片文件夹
 │   ├── components 公共组件文件夹
 │   ├── router 路由文件夹
 │   │   └── index.js 全局路由管理
+│   ├── store 全局状态管理
+│   │   └── index.js vuex主要内容（由于体量原因，暂未实现模块化）
 │   ├── service api请求文件夹
 │   │   ├── proto ProtoBuffer Api文件夹
 │   │   │   ├── msg_v_1.proto proto文件
@@ -117,30 +107,30 @@ vscode
 
 #### 简介
 
- 本系统主要是用 Websocket+ProtoBuffer 作为通信手段，其中 Protobuffer 主要定义前后端沟通交流的数据结构和构建序列化消息，Websocket 则主要为二者提供全双工通信，保持双方的实时沟通和数据交流。该功能主要内容位于/src/service 文件，而 websocket.js 提供创建 websocket 长连接，以及在长连接的条件下接收数据消息，并对其进行反序列化，值得注意的是，proto_main.js 文件（proto_main.js 文件是由同目录下 msg_v_1.proto 文件提取出得 API 编译组成）为该功能提供消息反序列化 API 支持。
+​ 本系统主要是用 Websocket+ProtoBuffer 作为通信手段，其中 Protobuffer 主要定义前后端沟通交流的数据结构和构建序列化消息，Websocket 则主要为二者提供全双工通信，保持双方的实时沟通和数据交流。该功能主要内容位于/src/service 文件，而 websocket.js 提供创建 websocket 长连接，以及在长连接的条件下接收数据消息，并对其进行反序列化，值得注意的是，proto_main.js 文件（proto_main.js 文件是由同目录下 msg_v_1.proto 文件提取出得 API 编译组成）为该功能提供消息反序列化 API 支持。
 
 #### 功能说明
 
- 该功能的实现主要由 websocket.js 文件完成，其中 websocket.js 主要负责管理 websocket 长连接和已接收数据消息的反序列化，由 proto_main.js 提供 API 支持。
+​ 该功能的实现主要由 websocket.js 文件完成，其中 websocket.js 主要负责管理 websocket 长连接和已接收数据消息的反序列化，由 proto_main.js 提供 API 支持。
 
- 在 websocket.js 创建出 SocketManager 自执行函数，函数内部创建 Websocket 对象实现长连接，并且在本函数内部创建一系列 WebsocketAPI（如 onOpen、onMessage、onSend 等等）并将其绑定到 Websocket 对象上。在开启长连接的前提下，接收到服务器消息时，首先数据消息进行 ArrayBuffer 类型判断，判断通过后对该数据消息进行首层解析，解析后将获得 mainPacket，根据 mainPacket 下的 messageType 的属性值判断消息类型，根据消息类型的不同采取不同的 API 进行第二层解析，将解析后的数据通过处理后即可在页面或组件中直接使用。
+​ 在 websocket.js 创建出 SocketManager 自执行函数，函数内部创建 Websocket 对象实现长连接，并且在本函数内部创建一系列 WebsocketAPI（如 onOpen、onMessage、onSend 等等）并将其绑定到 Websocket 对象上。在开启长连接的前提下，接收到服务器消息时，首先数据消息进行 ArrayBuffer 类型判断，判断通过后对该数据消息进行首层解析，解析后将获得 mainPacket，根据 mainPacket 下的 messageType 的属性值判断消息类型，根据消息类型的不同采取不同的 API 进行第二层解析，将解析后的数据通过处理后即可在页面或组件中直接使用。
 
 #### 字段说明
 
-首层输入项参数：
+##### 首层输入项参数：
 
 | 字段     | 说明         | 类型   | 备注                     | 是否必填 |
 | -------- | ------------ | ------ | ------------------------ | -------- |
 | cmd_code | 控制命令编码 | Number | 枚举编号 ×224+本类别编号 | 是       |
 | params   | 参数         | String |                          | 是       |
 
-首层返回值：
+##### 首层返回值：
 
 | 字段    | 说明 | 类型        | 备注                        | 是否必填 |
 | ------- | ---- | ----------- | --------------------------- | -------- |
 | content |      | ArrayBuffer | 此数据为主包的 content 内容 |          |
 
-第二层输入项参数：
+##### 第二层输入项参数：
 
 | 字段             | 说明           | 类型        | 备注                     | 是否必填 |
 | ---------------- | -------------- | ----------- | ------------------------ | :------- |
@@ -154,7 +144,7 @@ vscode
 | time             | 时间戳         | Number      |                          | 是       |
 | token            | 通行证         | String      |                          |          |
 
-首层返回值：
+##### 首层返回值：
 
 | 字段 | 说明 | 类型        | 备注             | 是否必填 |
 | ---- | ---- | ----------- | ---------------- | -------- |
@@ -162,41 +152,32 @@ vscode
 
 #### 消息订阅表说明：
 
-​		由于本系统与狼蛛共用同一数据接口，在日常运行中偶尔会接受来自于狼蛛系统的广播消息，但用户可能并不需要此类消息或数据，这时可能会造成数据冗余，那么适时合理接收广播消息就是本消息订阅功能的存在意义。
+​ 由于本系统与狼蛛共用同一数据接口，在日常运行中偶尔会接受来自于狼蛛系统的广播消息，但用户可能并不需要此类消息或数据，这时可能会造成数据冗余，那么适时合理接收广播消息就是本消息订阅功能的存在意义。
 
 ```js
-let subs_Table = new Array(16)
+let subs_Table = new Array(16);
 subs_Table = [
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-]
-export default new Uint8Array(subs_Table)
+  0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000,
+  0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000,
+  0b00000000, 0b00000000, 0b00000000, 0b00000000,
+];
+export default new Uint8Array(subs_Table);
 ```
 
-​		此消息订阅表为长度固定为16的二进制数组，数组元素为固定长度为8的二进制数字，每个元素初始状态皆为0b00000000，背后代表了8条消息的订阅与否，整个消息订阅表从数组首个元素的第一位开始一直到最后一个元素的第八位结束，分别代表了8*16=128（对应着proto文件中的MessageType）条二进制消息的订阅状态（0代表该消息未被订阅，1代表该消息已订阅）。在本系统中我们拒绝接受所有广播消息，只需将所有数组元素的每一位置0即可。
+​ 此消息订阅表为长度固定为 16 的二进制数组，数组元素为固定长度为 8 的二进制数字，每个元素初始状态皆为 0b00000000，背后代表了 8 条消息的订阅与否，整个消息订阅表从数组首个元素的第一位开始一直到最后一个元素的第八位结束，分别代表了 8\*16=128（对应着 proto 文件中的 MessageType）条二进制消息的订阅状态（0 代表该消息未被订阅，1 代表该消息已订阅）。在本系统中我们拒绝接受所有广播消息，只需将所有数组元素的每一位置 0 即可。
+
+​ 在确认登陆成功之后，才会向后台发送此条消息，如果想要重新确认需要接受的广播消息，只需将修改后的消息订阅表发送至后台即可。
 
 #### 注意事项：
 
-​		值得一提的是，在解析到SS_SIGNAL_SAMPLE类型的消息时，proto_main.js给出的解析方法会默认将数据按照B64格式解析，所以我们确定要接收非图像类数据的时候，需要使用另外的解析方法，例如：
+​ 值得注意的是，在解析到 SS_SIGNAL_SAMPLE 类型的消息时，proto_main.js 给出的解析方法会默认将数据按照 B64 格式解析，所以我们确定要接收非图像类数据的时候，需要使用另外的解析方法，例如：
 
 ```js
 if (ssSignalSample.originEntityType === proto.EntityType.SS_SEISMIC) {
-		let sampleValue = proto.ss_signal_sample.deserializeBinary(content).getSampleValue();
-    ssSignalSample.sampleValue = sampleValue;
+  let sampleValue = proto.ss_signal_sample
+    .deserializeBinary(content)
+    .getSampleValue();
+  ssSignalSample.sampleValue = sampleValue;
 }
 ```
 
@@ -204,10 +185,11 @@ if (ssSignalSample.originEntityType === proto.EntityType.SS_SEISMIC) {
 
 #### 首页
 
-![](/Users/hbg/同步空间/Mac-work/Snipaste_2022-12-28_14-56-11.png)
+![](https://p.ipic.vip/tptooo.png)
 
 ### 版本内容更新
 
 ```
 1.0.0:创建基础数据分析视图（2022.12.12）
+        消息订阅表发送的异步处理 （12.30）
 ```

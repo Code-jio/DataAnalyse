@@ -111,11 +111,20 @@ let SocketManager = (function () {
           let pcLogonAsw = proto.pc_logon_asw
             .deserializeBinary(content)
             .toObject();
-          // 判断登录是否成功
-          if (pcLogonAsw.rst === true) {
+          console.log(pcLogonAsw);
+          // 确认登陆之后，才发送消息订阅表
+          let promise = new Promise((resolve, reject) => {
+            if (pcLogonAsw.rst) {
+              resolve("登陆成功", pcLogonAsw)
+            } else {
+              reject("登陆失败", pcLogonAsw)
+            }
+          }).then((res) => {
+            console.log(res);
             // 在此处存储登录的token信息,并发送消息订阅表
-            store.commit("getUserID", pcLogonAsw.id)
-            sendSubscribeTable(subscribeTable)
+            store.commit("getUserID", pcLogonAsw.id);
+            sendSubscribeTable(subscribeTable);
+
             if (!window.localStorage) {
               alert('该设备不支持localstorage');
               return false;
@@ -125,7 +134,25 @@ let SocketManager = (function () {
                 JSON.stringify(pcLogonAsw.token)
               );
             }
-          }
+          }).catch((err) => {
+            console.log(err);
+          })
+          console.log(promise);
+          // 判断登录是否成功
+          // if (pcLogonAsw.rst) {
+          //   // 在此处存储登录的token信息,并发送消息订阅表
+          //   store.commit("getUserID", pcLogonAsw.id)
+          //   sendSubscribeTable(subscribeTable)
+          //   if (!window.localStorage) {
+          //     alert('该设备不支持localstorage');
+          //     return false;
+          //   } else {
+          //     localStorage.setItem(
+          //       'usertoken',
+          //       JSON.stringify(pcLogonAsw.token)
+          //     );
+          //   }
+          // }
           break;
         default:
           console.log(mainPacket);
