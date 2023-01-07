@@ -17,7 +17,7 @@ export function reqSampleList(startTime, endTime, id = proto.EntityType.SS_SEISM
   mainPack.setContent(R2S.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
-  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityId(store.state.home.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -29,7 +29,7 @@ export function reqSampleList(startTime, endTime, id = proto.EntityType.SS_SEISM
  * @param { Number } type 目标样本类型
  * @param { Number } destEntityId 目标id（作为返回结果的destentityid）
  */
-export function reqRelatedSample(id, type, destEntityId = store.state.userID) {
+export function reqRelatedSample(id, type, destEntityId = store.state.home.userID) {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(12);
   R2S.setParams(`${id},${type},${destEntityId}`);
@@ -38,7 +38,7 @@ export function reqRelatedSample(id, type, destEntityId = store.state.userID) {
   mainPack.setContent(R2S.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
-  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityId(store.state.home.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -58,7 +58,7 @@ export function reqSampleData(id) {
   mainPack.setContent(R2S.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
-  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityId(store.state.home.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -70,7 +70,7 @@ export function reqSampleData(id) {
  * @param { Number } destEntityId 目标ID
  * @param { Number } number 默认为256
  */
-export function reqFftData(sampleID, destEntityId = store.state.userID, number = 256) {
+export function reqFftData(sampleID, destEntityId = store.state.home.userID, number = 256) {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(8);
   R2S.setParams(`${sampleID},${destEntityId},${number}`);
@@ -79,7 +79,7 @@ export function reqFftData(sampleID, destEntityId = store.state.userID, number =
   mainPack.setContent(R2S.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
-  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityId(store.state.home.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -98,7 +98,7 @@ export function reqDeleteSample(sampleID) {
   mainPack.setContent(R2S.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
-  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityId(store.state.home.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -117,7 +117,7 @@ export function reqSampleClassifyRes(sampleID) {
   mainPack.setContent(R2S.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
-  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityId(store.state.home.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -129,7 +129,7 @@ export function reqSampleClassifyRes(sampleID) {
  * @param { Number } AlgoType 算法类型
  * @param { Number } destEntityId 目标ID 其实就是用户ID
  */
-export function reqAlgo(sampleID, AlgoType, destEntityId = store.state.userID) {
+export function reqAlgo(sampleID, AlgoType, destEntityId = store.state.home.userID) {
   let R2S = new proto.rqt_2pf_std();
   R2S.setRqtCode(11);
   R2S.setParams(`${sampleID},${AlgoType},${destEntityId}`);
@@ -138,7 +138,7 @@ export function reqAlgo(sampleID, AlgoType, destEntityId = store.state.userID) {
   mainPack.setContent(R2S.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
-  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityId(store.state.home.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -160,7 +160,7 @@ export function sendTags(sampleID, targetType, confidenceLevel = 100) {
   mainPack.setContent(AlgoClassifyRst.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.ALGO_CLASSIFY_RST);
-  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityId(store.state.home.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -194,8 +194,6 @@ export function login(msg) {
  * @returns 打包后的主包
  */
 export function sendSubscribeTable(msg) {
-
-  console.log(msg);
   // 登录信息打包
   let pcEntityRegister = new proto.pc_entity_register();
   pcEntityRegister.setSubscribeTable(msg);
@@ -204,7 +202,7 @@ export function sendSubscribeTable(msg) {
   mainPack.setContent(pcEntityRegister.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.PC_ENTITY_REGISTER);
-  mainPack.setOriginEntityId(store.state.userID); // 登陆设备id
+  mainPack.setOriginEntityId(store.state.home.userID); // 登陆设备id
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -223,7 +221,7 @@ export function getSensorList() {
   mainPack.setContent(R2S.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
-  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityId(store.state.home.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());
@@ -239,7 +237,7 @@ export function getTopoList() {
   mainPack.setContent(R2S.serializeBinary());
   mainPack.setCheck('0');
   mainPack.setMessageType(proto.MessageType.RQT_2PF_STD);
-  mainPack.setOriginEntityId(store.state.userID);
+  mainPack.setOriginEntityId(store.state.home.userID);
   mainPack.setOriginEntityType(proto.EntityType.FE_BROWSER); // 原始实体类型
   mainPack.setTime(new Date().getTime());
   socketMgr.send(mainPack.serializeBinary());

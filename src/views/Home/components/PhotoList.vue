@@ -1,6 +1,6 @@
 <template>
   <div class="photoList" ref="scrollBar" @mousewheel="horizontalScroll">
-    <div class="photo" v-for="(item, i) in store.state.photoList" :key="i">
+    <div class="photo" v-for="(item, i) in store.state.home.photoList" :key="i">
       <img class="image" :src="item.sampleValue" />
       <div class="imageInfo">
         <el-descriptions :column="1" direction="horizontal">
@@ -40,7 +40,7 @@ import { getEntityType, sendTags } from "@/service/websocket/send.js";
 const store = useStore();
 
 // eslint-disable-next-line no-unused-vars
-const photoList = computed(() => store.state.photoList);
+const photoList = computed(() => store.state.home.photoList);
 
 const scrollBar = ref(null);
 const horizontalScroll = (e) => {

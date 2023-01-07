@@ -65,8 +65,8 @@
 </template>
 
 <script setup>
+import "@/service/proto/proto_main.js";
 import { Delete } from "@element-plus/icons-vue";
-// import { getTargetType } from "@/service/websocket/send.js";
 import {
   reqDeleteSample,
   sendTags,
@@ -77,8 +77,8 @@ import emitter from "@/utils/eventBus.js";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
-const sampleClassifyInfo = computed(() => store.state.sampleClassifyInfo);
-const sampleTag = computed(() => store.state.sampleTag);
+const sampleClassifyInfo = computed(() => store.state.home.sampleClassifyInfo);
+const sampleTag = computed(() => store.state.home.sampleTag);
 const sampleInfo = ref(undefined);
 // 获取行数据
 emitter.on("sendRow", (info) => {
@@ -89,7 +89,6 @@ const deleteSample = (e) => {
   console.log(e);
   reqDeleteSample(e.id);
 };
-
 // 标签
 // const labels = ref("");
 // 选取标签

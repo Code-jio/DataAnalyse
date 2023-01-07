@@ -50,7 +50,6 @@ let SocketManager = (function () {
       _socket.onclose = this.onClose.bind(this);
     };
     this.onOpen = function () {
-      console.log(proto);
       console.log('连接成功');
       this.send(sendLoginMsg({ Account: "test", Passwd: "test" }))
       MessageType = proto.MessageType;
@@ -71,7 +70,7 @@ let SocketManager = (function () {
             .deserializeBinary(content)
             .toObject();
           // console.log(ssSeimicFft);
-          store.commit('addFftData', ssSeimicFft.sampleValueList);
+          store.commit('home/addFftData', ssSeimicFft.sampleValueList);
           break;
         // 样本分类信息
         case MessageType.SP_CLASSIFY_INFO:
@@ -79,7 +78,7 @@ let SocketManager = (function () {
             .deserializeBinary(content)
             .toObject();
           console.log(spClassifyInfo, "已获取样本分类信息");
-          store.commit('getSPClassifyInfo', spClassifyInfo);
+          store.commit('home/getSPClassifyInfo', spClassifyInfo);
           break;
         // 算法分类结果
         case MessageType.ALGO_CLASSIFY_RST:
@@ -87,7 +86,7 @@ let SocketManager = (function () {
             .deserializeBinary(content)
             .toObject();
           // console.log(algoClassifyRst, "已获取算法分类结果");
-          store.commit('getTag', algoClassifyRst);
+          store.commit('home/getTag', algoClassifyRst);
           break;
         // 图像传感器 拍摄图片
         case MessageType.SS_SIGNAL_SAMPLE:
@@ -98,12 +97,12 @@ let SocketManager = (function () {
             let sampleValue = proto.ss_signal_sample.deserializeBinary(content).getSampleValue();
             ssSignalSample.sampleValue = sampleValue;
           }
-          store.commit('resolveSample', { ssSignalSample, mainPacket });
+          store.commit('home/resolveSample', { ssSignalSample, mainPacket });
           break;
         // 获取样本列表
         case MessageType.PC_SAMPLE_LIST:
           let pcSampleList = proto.pc_sample_list.deserializeBinary(content).toObject();
-          store.commit("getSampleList", pcSampleList)
+          store.commit("home/getSampleList", pcSampleList)
           console.log(pcSampleList, "已获取样本列表");
           break;
         // 登陆回应
@@ -111,7 +110,6 @@ let SocketManager = (function () {
           let pcLogonAsw = proto.pc_logon_asw
             .deserializeBinary(content)
             .toObject();
-          console.log(pcLogonAsw);
           // 确认登陆之后，才发送消息订阅表
           let promise = new Promise((resolve, reject) => {
             if (pcLogonAsw.rst) {
@@ -122,7 +120,7 @@ let SocketManager = (function () {
           }).then((res) => {
             console.log(res);
             // 在此处存储登录的token信息,并发送消息订阅表
-            store.commit("getUserID", pcLogonAsw.id);
+            store.commit("home/getUserID", pcLogonAsw.id);
             sendSubscribeTable(subscribeTable);
 
             if (!window.localStorage) {
@@ -137,11 +135,10 @@ let SocketManager = (function () {
           }).catch((err) => {
             console.log(err);
           })
-          console.log(promise);
           // 判断登录是否成功
           // if (pcLogonAsw.rst) {
           //   // 在此处存储登录的token信息,并发送消息订阅表
-          //   store.commit("getUserID", pcLogonAsw.id)
+          //   store.commit("home/getUserID", pcLogonAsw.id)
           //   sendSubscribeTable(subscribeTable)
           //   if (!window.localStorage) {
           //     alert('该设备不支持localstorage');

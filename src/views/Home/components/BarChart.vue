@@ -4,21 +4,21 @@
     <el-button
       class="btn_256"
       :disabled="!sampleInfo"
-      @click="reqFftData(sampleInfo.id, store.state.userID, 256)"
+      @click="reqFftData(sampleInfo.id, store.state.home.userID, 256)"
     >
       256
     </el-button>
     <el-button
       class="btn_512"
       :disabled="!sampleInfo"
-      @click="reqFftData(sampleInfo.id, store.state.userID, 512)"
+      @click="reqFftData(sampleInfo.id, store.state.home.userID, 512)"
     >
       512
     </el-button>
     <el-button
       class="btn_1024"
       :disabled="!sampleInfo"
-      @click="reqFftData(sampleInfo.id, store.state.userID, 1024)"
+      @click="reqFftData(sampleInfo.id, store.state.home.userID, 1024)"
     >
       1024
     </el-button>
@@ -80,7 +80,7 @@ let option = {
     {
       type: "category",
       boundaryGap: true,
-      data: categories(store.state.ssSeimicFft.data.length),
+      data: categories(store.state.home.ssSeimicFft.data.length),
     },
   ],
   yAxis: [
@@ -95,7 +95,7 @@ let option = {
     {
       name: "",
       type: "bar",
-      data: store.state.ssSeimicFft.data,
+      data: store.state.home.ssSeimicFft.data,
     },
   ],
 };
@@ -110,7 +110,7 @@ onMounted(() => {
           {
             name: "",
             type: "bar",
-            data: store.state.ssSeimicFft.data,
+            data: store.state.home.ssSeimicFft.data,
           },
         ],
       });

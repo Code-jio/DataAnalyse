@@ -27,11 +27,11 @@ import {
 } from "@/service/websocket/send.js";
 
 const store = useStore();
-const sampleList = computed(() => store.state.sampleList);
+const sampleList = computed(() => store.state.home.sampleList);
 
 // 点击行数据 请求震动样本数据、傅里叶变换数据、样本分类结果、相关样本
 const getRowSignal = (e) => {
-  store.commit("resetData", []);
+  store.commit("home/resetData", []);
 
   console.log(e);
   // 请求样本数据;
